@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html ng-app="taskAngular">
+<head>
+    <meta charset="utf-8" />
+    <title>Heuristic Analysis</title>
+    <base href="/">
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/chart.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrapYeti.css"S>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css"> <!-- custom styles -->
+
+    <link rel="stylesheet" href="css/toastr.css">
+
+
+    <!-- JS -->
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/angular-route.min.js"></script>
+    <script src="libs/jquery-3.1.0.min.js"></script>
+  <script src="libs/bootstrap.min.js"></script>
+  
+    <!--ANGULAR APP-->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/toastr.js"></script>
+    <script src="scripts/config/notifications-config.js"></script>
+	
+    <!-- ANGULAR CONTROLLERS -->
+
+    <!--ANGULAR SERVICES-->
+	
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <!-- HEADER -->
+                <div class="page-header">
+                    <br />
+                    <br />
+                    <h1>XYZ Billing<br />
+                        <small>Quick Invoice Management Service</small>
+                    </h1>
+                </div>
+                
+                <!-- ANGULAR DYNAMIC CONTENT -->
+                <div ng-view></div>
+                <br>
+                <br>
+            </div><!-- End Col-->
+        </div><!-- End Row -->
+    </div><!--End Container-->
+</body>
+</html>

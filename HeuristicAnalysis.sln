@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeuristicAnalysis.Infrastructure.Database", "HeuristicAnalysis.Infrastructure.Database\HeuristicAnalysis.Infrastructure.Database.csproj", "{C25243BB-7E89-4A02-8B9E-DC669ABDCB43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeuristicAnalysis.Infrastructure.Services", "HeuristicAnalysis.Infrastructure.Services\HeuristicAnalysis.Infrastructure.Services.csproj", "{F6AE1048-AC38-4E30-910F-05861726E001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeuristicAnalysis.API", "HeuristicAnalysis.API\HeuristicAnalysis.API.csproj", "{228DD610-AF00-4A6A-BBC5-D4623D8720B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C25243BB-7E89-4A02-8B9E-DC669ABDCB43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C25243BB-7E89-4A02-8B9E-DC669ABDCB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C25243BB-7E89-4A02-8B9E-DC669ABDCB43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C25243BB-7E89-4A02-8B9E-DC669ABDCB43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6AE1048-AC38-4E30-910F-05861726E001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6AE1048-AC38-4E30-910F-05861726E001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6AE1048-AC38-4E30-910F-05861726E001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6AE1048-AC38-4E30-910F-05861726E001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{228DD610-AF00-4A6A-BBC5-D4623D8720B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{228DD610-AF00-4A6A-BBC5-D4623D8720B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{228DD610-AF00-4A6A-BBC5-D4623D8720B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{228DD610-AF00-4A6A-BBC5-D4623D8720B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0DD0ECBC-2299-40A6-B6DB-0B9BF0C7BABF}
+	EndGlobalSection
+EndGlobal
