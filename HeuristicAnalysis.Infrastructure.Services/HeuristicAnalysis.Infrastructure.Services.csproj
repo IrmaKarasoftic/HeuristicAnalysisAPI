@@ -40,13 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Aplikacija.cs" />
-    <Compile Include="Entities\GrupaKorisnika.cs" />
-    <Compile Include="Entities\Korisnik.cs" />
-    <Compile Include="Entities\Odgovor.cs" />
-    <Compile Include="Entities\Pitanje.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entities\Verzija.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

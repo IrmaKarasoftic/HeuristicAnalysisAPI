@@ -1,0 +1,11 @@
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\bin\Debug\HeuristicAnalysis.Infrastructure.Database.dll.config
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\bin\Debug\HeuristicAnalysis.Infrastructure.Database.dll
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\bin\Debug\HeuristicAnalysis.Infrastructure.Database.pdb
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\bin\Debug\EntityFramework.dll
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\bin\Debug\EntityFramework.xml
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csprojResolveAssemblyReference.cache
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csproj.CoreCompileInputs.cache
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.dll
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.pdb
