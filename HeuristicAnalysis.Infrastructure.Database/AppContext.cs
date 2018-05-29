@@ -10,7 +10,7 @@ namespace HeuristicAnalysis.Infrastructure.Database
 {
     public class AppContext : DbContext
     {
-        public AppContext() : base("Database") { }
+        public AppContext() : base("HeuristicAnalysis") { }
         public DbSet<Aplikacija> Aplikacije { get; set; }
         public DbSet<GrupaKorisnika> GrupeKorisnika { get; set; }
         public DbSet<Korisnik> Korisnik { get; set; }

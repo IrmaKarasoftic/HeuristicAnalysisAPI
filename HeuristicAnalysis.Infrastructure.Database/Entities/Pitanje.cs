@@ -4,6 +4,5 @@
     {
         public int Id { get; set; }
         public string TekstPitanja { get; set; }
-        public Odgovor Odgovor { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace HeuristicAnalysis.Infrastructure.Database.Entities
         public int IdVerzije { get; set; }
         public int IdReviewera { get; set; }
         public int IdPitanja { get; set; }
-        public List<Odgovor> Odgovori { get; set; }
+        public ICollection<Odgovor> Odgovori { get; set; }
     }
 }

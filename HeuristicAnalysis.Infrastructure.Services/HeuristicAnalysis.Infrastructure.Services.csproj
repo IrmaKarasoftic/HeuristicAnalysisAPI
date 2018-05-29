@@ -40,7 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HeuristicAnalysis.Infrastructure.Database\HeuristicAnalysis.Infrastructure.Database.csproj">
+      <Project>{C25243BB-7E89-4A02-8B9E-DC669ABDCB43}</Project>
+      <Name>HeuristicAnalysis.Infrastructure.Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
