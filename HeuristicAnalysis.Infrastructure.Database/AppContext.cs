@@ -14,7 +14,6 @@ namespace HeuristicAnalysis.Infrastructure.Database
         public DbSet<Aplikacija> Aplikacije { get; set; }
         public DbSet<GrupaKorisnika> GrupeKorisnika { get; set; }
         public DbSet<Korisnik> Korisnik { get; set; }
-        public DbSet<Odgovor> Odgovori { get; set; }
         public DbSet<Pitanje> Pitanja { get; set; }
         public DbSet<Verzija> Verzije { get; set; }
         public DbSet<Analiza> Analize { get; set; }

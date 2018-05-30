@@ -9,3 +9,5 @@ C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Se
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Database.pdb
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Database.dll.config
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\EntityFramework.xml
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Services.dll.CodeAnalysisLog.xml
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Services.dll.lastcodeanalysissucceeded

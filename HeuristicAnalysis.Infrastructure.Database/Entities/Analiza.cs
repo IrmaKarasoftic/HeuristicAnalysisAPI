@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace HeuristicAnalysis.Infrastructure.Database.Entities
 {
@@ -9,6 +10,5 @@ namespace HeuristicAnalysis.Infrastructure.Database.Entities
         public int IdVerzije { get; set; }
         public int IdReviewera { get; set; }
         public int IdPitanja { get; set; }
-        public ICollection<Odgovor> Odgovori { get; set; }
     }
 }

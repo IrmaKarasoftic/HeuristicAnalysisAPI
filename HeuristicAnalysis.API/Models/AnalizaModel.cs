@@ -10,6 +10,5 @@ namespace HeuristicAnalysis.API.Models
         public VerzijaModel Verzija { get; set; }
         public KorisnikModel Korisnik { get; set; }
         public PitanjeModel Pitanje { get; set; }
-        public List<OdgovorModel> Odgovori { get; set; }
     }
 }
