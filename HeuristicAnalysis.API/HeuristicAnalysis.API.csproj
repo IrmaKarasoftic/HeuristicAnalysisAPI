@@ -229,23 +229,23 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AnalizaController.cs" />
-    <Compile Include="Controllers\AplikacijeController.cs" />
+    <Compile Include="Controllers\AnalisysController.cs" />
+    <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\EntityParser.cs" />
-    <Compile Include="Controllers\GrupaKorisnikaController.cs" />
+    <Compile Include="Controllers\UserGroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModelFactory.cs" />
-    <Compile Include="Controllers\PitanjeController.cs" />
-    <Compile Include="Controllers\VerzijaController.cs" />
+    <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\VersionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AnalizaModel.cs" />
-    <Compile Include="Models\AplikacijaModel.cs" />
-    <Compile Include="Models\GrupaKorisnikaModel.cs" />
-    <Compile Include="Models\KorisnikModel.cs" />
-    <Compile Include="Models\PitanjeModel.cs" />
-    <Compile Include="Models\VerzijaModel.cs" />
+    <Compile Include="Models\AnalysisModel.cs" />
+    <Compile Include="Models\ApplicationModel.cs" />
+    <Compile Include="Models\UserGroupModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\QuestionModel.cs" />
+    <Compile Include="Models\VersionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

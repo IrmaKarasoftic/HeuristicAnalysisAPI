@@ -1,4 +1,3 @@
-C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\obj\Debug\HeuristicAnalysis.API.csprojResolveAssemblyReference.cache
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\obj\Debug\HeuristicAnalysis.API.csproj.CoreCompileInputs.cache
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\bin\HeuristicAnalysis.API.dll.config
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\bin\HeuristicAnalysis.API.dll
@@ -56,3 +55,5 @@ C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\bin\EntityFra
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\bin\System.Web.Cors.dll
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\bin\System.Web.Http.Cors.dll
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\bin\System.Web.Http.Cors.xml
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\obj\Debug\HeuristicAnalysis.API.csprojAssemblyReference.cache
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.API\obj\Debug\HeuristicAnalysis.API.csproj.CopyComplete

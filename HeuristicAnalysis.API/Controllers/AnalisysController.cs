@@ -7,17 +7,17 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Controllers
 {
-    public class VerzijaController : HomeController<Verzija>
+    public class AnalisysController : HomeController<Analysis>
     {
-        public VerzijaController(Repository<Verzija> repo) : base(repo) { }
+        public AnalisysController(Repository<Analysis> repo) : base(repo) { }
 
         [HttpGet]
         public IHttpActionResult GetAll()
         {
             try
             {
-                var verzije = Repository.Get().ToList().Select(x => Factory.Create(x, Repository.HomeContext())).ToList();
-                return Ok(verzije);
+                var analisysList = Repository.Get().ToList().Select(x => Factory.Create(x, Repository.HomeContext())).ToList();
+                return Ok(analisysList);
             }
             catch (Exception ex)
             {
@@ -30,8 +30,8 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var analiza = Repository.Get(id);
-                return Ok(analiza);
+                var analisys = Repository.Get(id);
+                return Ok(analisys);
             }
             catch (Exception ex)
             {
@@ -39,8 +39,9 @@ namespace HeuristicAnalysis.API.Controllers
             }
         }
 
+
         [HttpPost]
-        public IHttpActionResult Post(VerzijaModel model)
+        public IHttpActionResult Post(AnalysisModel model)
         {
             try
             {
@@ -55,14 +56,14 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult Put(VerzijaModel model, int id)
+        public IHttpActionResult Put(AnalysisModel model, int id)
         {
             if (model == null) return BadRequest("Model is null");
             if (id <= 0) return BadRequest("ID not valid");
             try
             {
-                var verzija = Repository.Get(id);
-                if (verzija == null) return NotFound();
+                var application = Repository.Get(id);
+                if (application == null) return NotFound();
                 Repository.Update(Parser.Create(model, Repository.HomeContext()), id);
                 return Ok();
             }
@@ -76,8 +77,8 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var verzija = Repository.Get(id);
-                if (verzija == null) return NotFound();
+                var analisys = Repository.Get(id);
+                if (analisys == null) return NotFound();
                 Repository.Delete(id);
                 return Ok();
             }

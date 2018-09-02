@@ -9,66 +9,66 @@ namespace HeuristicAnalysis.API.Controllers
 {
     public class ModelFactory
     {
-        public AplikacijaModel Create(Aplikacija aplikacija, AppContext context)
+        public ApplicationModel Create(Application aplikacija, AppContext context)
         {
-            return new AplikacijaModel()
+            return new ApplicationModel()
             {
                 Id = aplikacija.Id,
-                Naziv = aplikacija.Naziv,
+                Name = aplikacija.Name,
                 Url = aplikacija.Url,
                 //Verzije = new Repository<Verzija>(context).Get().ToList().Select(verzija => Create(verzija, context)).ToList()
             };
         }
 
-        public VerzijaModel Create(Verzija verzija, AppContext homeContext)
+        public VersionModel Create(Infrastructure.Database.Entities.Version verzija, AppContext homeContext)
         {
-            return new VerzijaModel()
+            return new VersionModel()
             {
                 Id = verzija.Id,
-                Datum = verzija.Datum,
-                NazivVerzije = verzija.NazivVerzije
+                Date = verzija.Date,
+                VersionName = verzija.VersionName
             };
         }
 
-        public AnalizaModel Create(Analiza analiza, AppContext context)
+        public AnalysisModel Create(Analysis analiza, AppContext context)
         {
-            return new AnalizaModel()
+            return new AnalysisModel()
             {
                 Id = analiza.Id,
-                Aplikacija = Create(new Repository<Aplikacija>(context).Get(analiza.IdAplikacije), context),
-                Korisnik = Create(new Repository<Korisnik>(context).Get(analiza.IdReviewera), context),
-                Verzija = Create(new Repository<Verzija>(context).Get(analiza.IdVerzije), context),
-                Pitanje = Create(new Repository<Pitanje>(context).Get(analiza.IdPitanja), context)
+                Aplikacija = Create(new Repository<Application>(context).Get(analiza.ApplicationId), context),
+                Korisnik = Create(new Repository<User>(context).Get(analiza.ReviewerId), context),
+                Verzija = Create(new Repository<Infrastructure.Database.Entities.Version>(context).Get(analiza.VersionId), context),
+                Pitanje = Create(new Repository<Question>(context).Get(analiza.QuestionId), context)
             };
         }
 
-        public PitanjeModel Create(Pitanje pitanje, AppContext context)
+        public QuestionModel Create(Question pitanje, AppContext context)
         {
-            return new PitanjeModel()
+            return new QuestionModel()
             {
                 Id = pitanje.Id,
-                TekstPitanja = pitanje.TekstPitanja,
+                Heuristic = pitanje.Heuristic,
             };
         }
 
 
-        public KorisnikModel Create(Korisnik korisnik, AppContext context)
+        public UserModel Create(User korisnik, AppContext context)
         {
-            return new KorisnikModel()
+            return new UserModel()
             {
                 Id = korisnik.Id,
                 Admin = korisnik.Admin,
-                Ime = korisnik.Ime,
-                Prezime = korisnik.Prezime
+                FirstName = korisnik.FirstName,
+                LastName = korisnik.LastName
             };
         }
 
-        public GrupaKorisnikaModel Create(GrupaKorisnika grupa, AppContext context)
+        public UserGroupModel Create(UserGroup grupa, AppContext context)
         {
-            return new GrupaKorisnikaModel()
+            return new UserGroupModel()
             {
                 Id = grupa.Id,
-                NazivGrupe = grupa.NazivGrupe,
+                GroupName = grupa.GroupName,
                 // Korisnici = grupa.Korisnici.ToList().Select(x => Create(x, context)).ToList();
             };
         }

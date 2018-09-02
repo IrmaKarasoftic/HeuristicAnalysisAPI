@@ -6,76 +6,76 @@ namespace HeuristicAnalysis.API.Controllers
 {
     public class EntityParser
     {
-        public Analiza Create(AnalizaModel model, AppContext context)
+        public Analysis Create(AnalysisModel model, AppContext context)
         {
-            return new Analiza()
+            return new Analysis()
             {
                 Id = model.Id,
-                IdAplikacije = model.Aplikacija.Id,
-                IdPitanja = model.Pitanje.Id,
-                IdReviewera = model.Korisnik.Id,
-                IdVerzije = model.Verzija.Id
+                ApplicationId = model.Aplikacija.Id,
+                QuestionId = model.Pitanje.Id,
+                ReviewerId = model.Korisnik.Id,
+                VersionId = model.Verzija.Id
             };
         }
 
-        public Aplikacija Create(AplikacijaModel model, AppContext context)
+        public Application Create(ApplicationModel model, AppContext context)
         {
-            return new Aplikacija()
+            return new Application()
             {
                 Id = model.Id,
-                Naziv = model.Naziv,
+                Name = model.Name,
                 Url = model.Url
             };
         }
 
-        public Verzija Create(VerzijaModel verzija, AppContext homeContext)
+        public Version Create(VersionModel verzija, AppContext homeContext)
         {
-            return new Verzija()
+            return new Version()
             {
                 Id = verzija.Id,
-                Datum = verzija.Datum,
-                NazivVerzije = verzija.NazivVerzije
+                Date = verzija.Date,
+                VersionName = verzija.VersionName
             };
         }
 
-        public Pitanje Create(PitanjeModel pitanje, AppContext context)
+        public Question Create(QuestionModel pitanje, AppContext context)
         {
-            return new Pitanje()
+            return new Question()
             {
                 Id = pitanje.Id,
-                TekstPitanja = pitanje.TekstPitanja
+                Heuristic = pitanje.Heuristic
             };
         }
 
-        public Korisnik Create(KorisnikModel korisnik, AppContext context)
+        public User Create(UserModel korisnik, AppContext context)
         {
-            return new Korisnik()
+            return new User()
             {
                 Id = korisnik.Id,
                 Admin = korisnik.Admin,
-                Ime = korisnik.Ime,
-                Prezime = korisnik.Prezime
+                FirstName = korisnik.FirstName,
+                LastName = korisnik.LastName
             };
         }
 
-        public GrupaKorisnika Create(GrupaKorisnikaModel grupa, AppContext context)
+        public UserGroup Create(UserGroupModel grupa, AppContext context)
         {
-            return new GrupaKorisnika()
+            return new UserGroup()
             {
                 Id = grupa.Id,
-                NazivGrupe = grupa.NazivGrupe,
+                GroupName = grupa.GroupName,
                 //Korisnici
             };
         }
 
-        public Korisnik Create(Korisnik korisnik, AppContext homeContext)
+        public User Create(User korisnik, AppContext homeContext)
         {
-            return new Korisnik()
+            return new User()
             {
                 Id = korisnik.Id,
                 Admin = korisnik.Admin,
-                Ime = korisnik.Ime,
-                Prezime = korisnik.Prezime
+                FirstName = korisnik.FirstName,
+                LastName = korisnik.LastName
             };
         }
     }

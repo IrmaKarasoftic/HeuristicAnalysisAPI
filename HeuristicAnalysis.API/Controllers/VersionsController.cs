@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
@@ -9,17 +7,17 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Controllers
 {
-    public class GrupaKorisnikaController : HomeController<GrupaKorisnika>
+    public class VersionsController : HomeController<Infrastructure.Database.Entities.Version>
     {
-        public GrupaKorisnikaController(Repository<GrupaKorisnika> repo) : base(repo) { }
+        public VersionsController(Repository<Infrastructure.Database.Entities.Version> repo) : base(repo) { }
 
         [HttpGet]
         public IHttpActionResult GetAll()
         {
             try
             {
-                var grupe = Repository.Get().ToList().Select(x => Factory.Create(x, Repository.HomeContext())).ToList();
-                return Ok(grupe);
+                var versions = Repository.Get().ToList().Select(x => Factory.Create(x, Repository.HomeContext())).ToList();
+                return Ok(versions);
             }
             catch (Exception ex)
             {
@@ -32,8 +30,8 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var analiza = Repository.Get(id);
-                return Ok(analiza);
+                var version = Repository.Get(id);
+                return Ok(version);
             }
             catch (Exception ex)
             {
@@ -42,7 +40,7 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Post(GrupaKorisnikaModel model)
+        public IHttpActionResult Post(VersionModel model)
         {
             try
             {
@@ -57,14 +55,14 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult Put(GrupaKorisnikaModel model, int id)
+        public IHttpActionResult Put(VersionModel model, int id)
         {
             if (model == null) return BadRequest("Model is null");
             if (id <= 0) return BadRequest("ID not valid");
             try
             {
-                var grupa = Repository.Get(id);
-                if (grupa == null) return NotFound();
+                var version = Repository.Get(id);
+                if (version == null) return NotFound();
                 Repository.Update(Parser.Create(model, Repository.HomeContext()), id);
                 return Ok();
             }
@@ -78,8 +76,8 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var grupa = Repository.Get(id);
-                if (grupa == null) return NotFound();
+                var version = Repository.Get(id);
+                if (version == null) return NotFound();
                 Repository.Delete(id);
                 return Ok();
             }

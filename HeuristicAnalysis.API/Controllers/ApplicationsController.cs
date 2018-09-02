@@ -7,17 +7,17 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Controllers
 {
-    public class AplikacijeController : HomeController<Aplikacija>
+    public class ApplicationsController : HomeController<Application>
     {
-        public AplikacijeController(Repository<Aplikacija> repo) : base(repo) { }
+        public ApplicationsController(Repository<Application> repo) : base(repo) { }
 
         [HttpGet]
         public IHttpActionResult GetAll()
         {
             try
             {
-                var aplikacije = Repository.Get().ToList().Select(x => Factory.Create(x, Repository.HomeContext())).ToList();
-                return Ok(aplikacije);
+                var applications = Repository.Get().ToList().Select(x => Factory.Create(x, Repository.HomeContext())).ToList();
+                return Ok(applications);
             }
             catch (Exception ex)
             {
@@ -30,8 +30,8 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var analiza = Repository.Get(id);
-                return Ok(analiza);
+                var application = Repository.Get(id);
+                return Ok(application);
             }
             catch (Exception ex)
             {
@@ -40,7 +40,7 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Post(AplikacijaModel model)
+        public IHttpActionResult Post(ApplicationModel model)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult Put(AplikacijaModel model, int id)
+        public IHttpActionResult Put(ApplicationModel model, int id)
         {
             if (model == null) return BadRequest("Model is null");
             if (id <= 0) return BadRequest("ID not valid");
@@ -76,8 +76,8 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var aplikacija = Repository.Get(id);
-                if (aplikacija == null) return NotFound();
+                var application = Repository.Get(id);
+                if (application == null) return NotFound();
                 Repository.Delete(id);
                 return Ok();
             }

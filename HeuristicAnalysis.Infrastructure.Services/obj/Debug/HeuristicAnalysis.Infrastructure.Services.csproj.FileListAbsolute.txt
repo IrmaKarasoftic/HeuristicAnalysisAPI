@@ -1,6 +1,5 @@
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Services.dll
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Services.pdb
-C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\obj\Debug\HeuristicAnalysis.Infrastructure.Services.csprojResolveAssemblyReference.cache
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\obj\Debug\HeuristicAnalysis.Infrastructure.Services.csproj.CoreCompileInputs.cache
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\obj\Debug\HeuristicAnalysis.Infrastructure.Services.dll
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\obj\Debug\HeuristicAnalysis.Infrastructure.Services.pdb
@@ -9,5 +8,5 @@ C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Se
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Database.pdb
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Database.dll.config
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\EntityFramework.xml
-C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Services.dll.CodeAnalysisLog.xml
-C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\bin\Debug\HeuristicAnalysis.Infrastructure.Services.dll.lastcodeanalysissucceeded
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\obj\Debug\HeuristicAnalysis.Infrastructure.Services.csprojAssemblyReference.cache
+C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Services\obj\Debug\HeuristicAnalysis.Infrastructure.Services.csproj.CopyComplete
