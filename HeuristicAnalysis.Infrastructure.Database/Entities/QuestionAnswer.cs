@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace HeuristicAnalysis.Infrastructure.Database.Entities
 {
-    public class Question
+    public class QuestionAnswer
     {
         public int Id { get; set; }
         public string Heuristic { get; set; }

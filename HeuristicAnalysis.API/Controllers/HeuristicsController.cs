@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Http;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
@@ -7,17 +9,17 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Controllers
 {
-    public class AnalisysController : HomeController<Analysis>
+    public class HeuristicsController : HomeController<Heuristic>
     {
-        public AnalisysController(Repository<Analysis> repo) : base(repo) { }
+        public HeuristicsController(Repository<Heuristic> repo) : base(repo) { }
 
         [HttpGet]
         public IHttpActionResult GetAll()
         {
             try
             {
-                var analisysList = Repository.Get().ToList().Select(x => Factory.Create(x, Repository.HomeContext())).ToList();
-                return Ok(analisysList);
+                var questions = Repository.Get().ToList().Select(x => Factory.Create(x)).ToList();
+                return Ok(questions);
             }
             catch (Exception ex)
             {
@@ -30,8 +32,8 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var analisys = Repository.Get(id);
-                return Ok(analisys);
+                var question = Repository.Get(id);
+                return Ok(question);
             }
             catch (Exception ex)
             {
@@ -39,14 +41,13 @@ namespace HeuristicAnalysis.API.Controllers
             }
         }
 
-
         [HttpPost]
-        public IHttpActionResult Post(AnalysisModel model)
+        public IHttpActionResult Post(HeuristicModel model)
         {
             try
             {
                 if (model == null) return BadRequest("Model is null");
-                Repository.Insert(Parser.Create(model, Repository.HomeContext()));
+                //Repository.Insert(Parser.Create(model, Repository.HomeContext()));
                 return Ok();
             }
             catch (Exception ex)
@@ -56,15 +57,15 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult Put(AnalysisModel model, int id)
+        public IHttpActionResult Put(HeuristicModel model, int id)
         {
             if (model == null) return BadRequest("Model is null");
             if (id <= 0) return BadRequest("ID not valid");
             try
             {
-                var application = Repository.Get(id);
-                if (application == null) return NotFound();
-                Repository.Update(Parser.Create(model, Repository.HomeContext()), id);
+                var heuristic = Repository.Get(id);
+                if (heuristic == null) return NotFound();
+                Repository.Update(Parser.Create(model), id);
                 return Ok();
             }
             catch (Exception ex)
@@ -77,8 +78,8 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var analisys = Repository.Get(id);
-                if (analisys == null) return NotFound();
+                var heuristic = Repository.Get(id);
+                if (heuristic == null) return NotFound();
                 Repository.Delete(id);
                 return Ok();
             }

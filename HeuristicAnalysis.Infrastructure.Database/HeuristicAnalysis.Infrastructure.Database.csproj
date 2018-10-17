@@ -51,9 +51,10 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Entities\Analysis.cs" />
     <Compile Include="Entities\Application.cs" />
+    <Compile Include="Entities\Heuristic.cs" />
     <Compile Include="Entities\UserGroup.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\Question.cs" />
+    <Compile Include="Entities\QuestionAnswer.cs" />
     <Compile Include="Entities\Version.cs" />
     <Compile Include="Interface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,9 +9,9 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Controllers
 {
-    public class QuestionsController : HomeController<Question>
+    public class QuestionsController : HomeController<QuestionAnswer>
     {
-        public QuestionsController(Repository<Question> repo) : base(repo) { }
+        public QuestionsController(Repository<QuestionAnswer> repo) : base(repo) { }
 
         [HttpGet]
         public IHttpActionResult GetAll()

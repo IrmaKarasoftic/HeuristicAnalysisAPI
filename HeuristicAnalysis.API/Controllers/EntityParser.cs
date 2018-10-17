@@ -1,24 +1,25 @@
-﻿using HeuristicAnalysis.API.Models;
+﻿using System;
+using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
 using HeuristicAnalysis.Infrastructure.Database.Entities;
+using Version = HeuristicAnalysis.Infrastructure.Database.Entities.Version;
 
 namespace HeuristicAnalysis.API.Controllers
 {
     public class EntityParser
     {
-        public Analysis Create(AnalysisModel model, AppContext context)
+        public Analysis Create(AnalysisModel model, Infrastructure.Database.AppContext context)
         {
             return new Analysis()
             {
                 Id = model.Id,
                 ApplicationId = model.Aplikacija.Id,
-                QuestionId = model.Pitanje.Id,
                 ReviewerId = model.Korisnik.Id,
                 VersionId = model.Verzija.Id
             };
         }
 
-        public Application Create(ApplicationModel model, AppContext context)
+        public Application Create(ApplicationModel model, Infrastructure.Database.AppContext context)
         {
             return new Application()
             {
@@ -28,7 +29,7 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        public Version Create(VersionModel verzija, AppContext homeContext)
+        public Version Create(VersionModel verzija, Infrastructure.Database.AppContext homeContext)
         {
             return new Version()
             {
@@ -38,16 +39,16 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        public Question Create(QuestionModel pitanje, AppContext context)
+        public QuestionAnswer Create(QuestionModel pitanje, Infrastructure.Database.AppContext context)
         {
-            return new Question()
+            return new QuestionAnswer()
             {
                 Id = pitanje.Id,
                 Heuristic = pitanje.Heuristic
             };
         }
 
-        public User Create(UserModel korisnik, AppContext context)
+        public User Create(UserModel korisnik, Infrastructure.Database.AppContext context)
         {
             return new User()
             {
@@ -58,7 +59,7 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        public UserGroup Create(UserGroupModel grupa, AppContext context)
+        public UserGroup Create(UserGroupModel grupa, Infrastructure.Database.AppContext context)
         {
             return new UserGroup()
             {
@@ -68,7 +69,7 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        public User Create(User korisnik, AppContext homeContext)
+        public User Create(User korisnik, Infrastructure.Database.AppContext homeContext)
         {
             return new User()
             {
@@ -76,6 +77,15 @@ namespace HeuristicAnalysis.API.Controllers
                 Admin = korisnik.Admin,
                 FirstName = korisnik.FirstName,
                 LastName = korisnik.LastName
+            };
+        }
+
+        internal Heuristic Create(HeuristicModel model)
+        {
+            return new Heuristic()
+            {
+                Id = model.Id,
+                HeuristicText = model.HeuristicText
             };
         }
     }

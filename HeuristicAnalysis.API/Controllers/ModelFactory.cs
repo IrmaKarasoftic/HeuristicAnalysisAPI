@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
 using HeuristicAnalysis.Infrastructure.Database.Entities;
 using AppContext = HeuristicAnalysis.Infrastructure.Database.AppContext;
+using Version = HeuristicAnalysis.Infrastructure.Database.Entities.Version;
 
 namespace HeuristicAnalysis.API.Controllers
 {
@@ -11,12 +13,39 @@ namespace HeuristicAnalysis.API.Controllers
     {
         public ApplicationModel Create(Application aplikacija, AppContext context)
         {
+            var a =
+                new ApplicationModel()
+                {
+                    Id = aplikacija.Id,
+                    Name = aplikacija.Name,
+                    Url = aplikacija.Url,
+                    Versions = aplikacija.Versions.Select(Create).ToList()
+                };
             return new ApplicationModel()
             {
                 Id = aplikacija.Id,
                 Name = aplikacija.Name,
                 Url = aplikacija.Url,
-                //Verzije = new Repository<Verzija>(context).Get().ToList().Select(verzija => Create(verzija, context)).ToList()
+                Versions = aplikacija.Versions.Select(Create).ToList()
+            };
+
+        VersionModel Create(Version x)
+        {
+            return new VersionModel()
+            {
+                Id = x.Id,
+                Date = x.Date,
+                VersionName = x.VersionName
+            };
+        }
+    }
+
+        internal HeuristicModel Create(Heuristic x)
+        {
+            return new HeuristicModel()
+            {
+                Id = x.Id,
+                HeuristicText = x.HeuristicText
             };
         }
 
@@ -38,16 +67,16 @@ namespace HeuristicAnalysis.API.Controllers
                 Aplikacija = Create(new Repository<Application>(context).Get(analiza.ApplicationId), context),
                 Korisnik = Create(new Repository<User>(context).Get(analiza.ReviewerId), context),
                 Verzija = Create(new Repository<Infrastructure.Database.Entities.Version>(context).Get(analiza.VersionId), context),
-                Pitanje = Create(new Repository<Question>(context).Get(analiza.QuestionId), context)
             };
         }
 
-        public QuestionModel Create(Question pitanje, AppContext context)
+        public QuestionModel Create(QuestionAnswer pitanje, AppContext context)
         {
             return new QuestionModel()
             {
                 Id = pitanje.Id,
                 Heuristic = pitanje.Heuristic,
+                Description = pitanje.Description
             };
         }
 
@@ -59,7 +88,9 @@ namespace HeuristicAnalysis.API.Controllers
                 Id = korisnik.Id,
                 Admin = korisnik.Admin,
                 FirstName = korisnik.FirstName,
-                LastName = korisnik.LastName
+                LastName = korisnik.LastName,
+                Occupation = korisnik.Occupation,
+                DateOfBirth = korisnik.DateOfBirth.ToShortDateString()
             };
         }
 
@@ -69,6 +100,7 @@ namespace HeuristicAnalysis.API.Controllers
             {
                 Id = grupa.Id,
                 GroupName = grupa.GroupName,
+                NumberOfUsers = 5
                 // Korisnici = grupa.Korisnici.ToList().Select(x => Create(x, context)).ToList();
             };
         }

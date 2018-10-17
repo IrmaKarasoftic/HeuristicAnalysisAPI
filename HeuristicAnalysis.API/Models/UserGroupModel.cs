@@ -10,5 +10,6 @@ namespace HeuristicAnalysis.API.Models
         public int Id { get; set; }
         public string GroupName { get; set; }
         public ICollection<User> Users { get; set; }
+        public int NumberOfUsers { get; set; }
     }
 }
