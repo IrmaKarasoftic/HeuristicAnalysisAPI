@@ -29,16 +29,16 @@ namespace HeuristicAnalysis.API.Controllers
                 Versions = aplikacija.Versions.Select(Create).ToList()
             };
 
-        VersionModel Create(Version x)
-        {
-            return new VersionModel()
+            VersionModel Create(Version x)
             {
-                Id = x.Id,
-                Date = x.Date,
-                VersionName = x.VersionName
-            };
+                return new VersionModel()
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    VersionName = x.VersionName
+                };
+            }
         }
-    }
 
         internal HeuristicModel Create(Heuristic x)
         {
@@ -89,20 +89,51 @@ namespace HeuristicAnalysis.API.Controllers
                 Admin = korisnik.Admin,
                 FirstName = korisnik.FirstName,
                 LastName = korisnik.LastName,
+                Name = korisnik.LastName + " " + korisnik.FirstName,
                 Occupation = korisnik.Occupation,
                 DateOfBirth = korisnik.DateOfBirth.ToShortDateString()
             };
         }
 
-        public UserGroupModel Create(UserGroup grupa, AppContext context)
+        public GroupModel Create(Group grupa, AppContext context)
         {
-            return new UserGroupModel()
+            return new GroupModel()
             {
                 Id = grupa.Id,
                 GroupName = grupa.GroupName,
                 NumberOfUsers = 5
-                // Korisnici = grupa.Korisnici.ToList().Select(x => Create(x, context)).ToList();
             };
         }
+
+        public GroupWithUsers CreateGroupWithUsersModel(int id, AppContext context)
+        {
+            var group = new Repository<Group>(context).Get(id);
+            var userGroups = new Repository<UserGroup>(context).Get().ToList();
+            var allUsers = new Repository<User>(context).Get().ToList();
+            var userList = new List<UserWithAssignedFlag>();
+            foreach (var user in allUsers)
+            {
+                var userModel = new UserWithAssignedFlag()
+                {
+                    Id = user.Id,
+                    DateOfBirth = user.DateOfBirth.ToShortTimeString(),
+                    Admin = user.Admin,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Name = user.LastName + " " + user.FirstName,
+                    Occupation = user.Occupation,
+                    Assigned = false
+                };
+                userModel.Assigned = userGroups.Any(g => g.GroupId == group.Id && user.Id == g.UserId);
+                userList.Add(userModel);
+            }
+            var groupWithUsers = new GroupWithUsers
+            {
+                GroupId = id,
+                Users = userList
+            };
+            return groupWithUsers;
+        }
     }
+
 }

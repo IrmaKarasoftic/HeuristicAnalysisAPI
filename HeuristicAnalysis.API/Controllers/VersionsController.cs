@@ -45,7 +45,10 @@ namespace HeuristicAnalysis.API.Controllers
             try
             {
                 if (model == null) return BadRequest("Model is null");
-                Repository.Insert(Parser.Create(model, Repository.HomeContext()));
+                var appRepo = new Repository<Application>(Repository.HomeContext());
+                var app = appRepo.Get(model.ApplicationId);
+                app.Versions.Add(Parser.Create(model, Repository.HomeContext()));
+                appRepo.Update(app, app.Id);
                 return Ok();
             }
             catch (Exception ex)

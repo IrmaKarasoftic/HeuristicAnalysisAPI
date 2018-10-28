@@ -55,17 +55,18 @@ namespace HeuristicAnalysis.API.Controllers
                 Id = korisnik.Id,
                 Admin = korisnik.Admin,
                 FirstName = korisnik.FirstName,
-                LastName = korisnik.LastName
+                LastName = korisnik.LastName,
+                Occupation = korisnik.Occupation,
+                DateOfBirth = Convert.ToDateTime(korisnik.DateOfBirth)
             };
         }
 
-        public UserGroup Create(UserGroupModel grupa, Infrastructure.Database.AppContext context)
+        public Group Create(GroupModel grupa, Infrastructure.Database.AppContext context)
         {
-            return new UserGroup()
+            return new Group()
             {
                 Id = grupa.Id,
                 GroupName = grupa.GroupName,
-                //Korisnici
             };
         }
 

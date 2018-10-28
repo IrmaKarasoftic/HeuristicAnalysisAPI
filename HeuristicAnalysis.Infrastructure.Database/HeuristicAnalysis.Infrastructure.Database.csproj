@@ -53,6 +53,7 @@
     <Compile Include="Entities\Application.cs" />
     <Compile Include="Entities\Heuristic.cs" />
     <Compile Include="Entities\UserGroup.cs" />
+    <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\QuestionAnswer.cs" />
     <Compile Include="Entities\Version.cs" />

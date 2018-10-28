@@ -236,7 +236,7 @@
     <Compile Include="Controllers\EntityParser.cs" />
     <Compile Include="Controllers\HeuristicsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\UserGroupsController.cs" />
+    <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModelFactory.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
@@ -244,10 +244,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssignUserModel.cs" />
+    <Compile Include="Models\GroupWithUsers.cs" />
     <Compile Include="Models\HeuristicModel.cs" />
     <Compile Include="Models\AnalysisModel.cs" />
     <Compile Include="Models\ApplicationModel.cs" />
     <Compile Include="Models\UserGroupModel.cs" />
+    <Compile Include="Models\UserWithAssignedFlag.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\VersionModel.cs" />

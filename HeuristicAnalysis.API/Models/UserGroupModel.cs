@@ -4,12 +4,11 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Models
 {
-    public class UserGroupModel
+    public class GroupModel
     {
        
         public int Id { get; set; }
         public string GroupName { get; set; }
-        public ICollection<User> Users { get; set; }
         public int NumberOfUsers { get; set; }
     }
 }

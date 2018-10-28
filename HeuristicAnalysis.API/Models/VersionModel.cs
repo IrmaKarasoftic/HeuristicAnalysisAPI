@@ -7,5 +7,6 @@ namespace HeuristicAnalysis.API.Models
         public int Id { get; set; }
         public string VersionName { get; set; }
         public DateTime Date { get; set; }
+        public int ApplicationId { get; set; }
     }
 }

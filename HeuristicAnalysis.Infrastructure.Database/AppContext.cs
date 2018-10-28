@@ -12,6 +12,7 @@ namespace HeuristicAnalysis.Infrastructure.Database
     {
         public AppContext() : base("HeuristicAnalysis") { }
         public DbSet<Application> Applications { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<QuestionAnswer> QuestionAnswers { get; set; }

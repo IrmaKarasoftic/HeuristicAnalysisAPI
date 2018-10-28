@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
@@ -9,9 +7,9 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Controllers
 {
-    public class UserGroupsController : HomeController<UserGroup>
+    public class GroupsController : HomeController<Group>
     {
-        public UserGroupsController(Repository<UserGroup> repo) : base(repo) { }
+        public GroupsController(Repository<Group> repo) : base(repo) { }
 
         [HttpGet]
         public IHttpActionResult GetAll()
@@ -41,8 +39,52 @@ namespace HeuristicAnalysis.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/Groups/users/{id:int}")]
+        public IHttpActionResult Get(int id)
+        {
+            try
+            {
+                var users = Factory.CreateGroupWithUsersModel(id, Repository.HomeContext());
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
-        public IHttpActionResult Post(UserGroupModel model)
+        [Route("api/Groups/assign")]
+        public IHttpActionResult Assign(AssignUserModel model)
+        {
+            try
+            {
+                var userGroupRepo = new Repository<UserGroup>(Repository.HomeContext());
+                if (model.Assign)
+                {
+                    var userGroup = new UserGroup()
+                    {
+                        GroupId = model.GroupId,
+                        UserId = model.UserId
+                    };
+                    userGroupRepo.Insert(userGroup);
+                }
+                else
+                {
+                    var ugToDelete = userGroupRepo.Get().FirstOrDefault(ug => ug.UserId == model.UserId && ug.GroupId == model.GroupId);
+                    if (ugToDelete != null) userGroupRepo.Delete(ugToDelete.Id);
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult Post(GroupModel model)
         {
             try
             {
@@ -57,7 +99,7 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult Put(UserGroupModel model, int id)
+        public IHttpActionResult Put(GroupModel model, int id)
         {
             if (model == null) return BadRequest("Model is null");
             if (id <= 0) return BadRequest("ID not valid");
@@ -74,6 +116,7 @@ namespace HeuristicAnalysis.API.Controllers
             }
         }
 
+        [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             try

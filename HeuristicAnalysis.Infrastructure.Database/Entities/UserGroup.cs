@@ -5,12 +5,8 @@ namespace HeuristicAnalysis.Infrastructure.Database.Entities
 {
     public class UserGroup
     {
-        public UserGroup()
-        {
-            Users = new Collection<User>();
-        }
         public int Id { get; set; }
-        public string GroupName { get; set; }
-        public ICollection<User> Users { get; set; }
+        public int UserId { get; set; }
+        public int GroupId { get; set; }
     }
 }
