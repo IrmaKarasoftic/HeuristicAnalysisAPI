@@ -14,6 +14,7 @@ namespace HeuristicAnalysis.Infrastructure.Database
         public DbSet<Application> Applications { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<UploadedImage> Images { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<QuestionAnswer> QuestionAnswers { get; set; }
         public DbSet<Heuristic> Heuristics { get; set; }

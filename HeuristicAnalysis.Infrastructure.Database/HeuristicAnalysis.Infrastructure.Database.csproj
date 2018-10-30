@@ -52,6 +52,7 @@
     <Compile Include="Entities\Analysis.cs" />
     <Compile Include="Entities\Application.cs" />
     <Compile Include="Entities\Heuristic.cs" />
+    <Compile Include="Entities\UploadedImage.cs" />
     <Compile Include="Entities\UserGroup.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\User.cs" />
@@ -64,6 +65,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
