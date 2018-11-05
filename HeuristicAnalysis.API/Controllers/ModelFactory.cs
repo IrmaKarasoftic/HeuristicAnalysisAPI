@@ -13,31 +13,26 @@ namespace HeuristicAnalysis.API.Controllers
     {
         public ApplicationModel Create(Application aplikacija, AppContext context)
         {
-            var a =
-                new ApplicationModel()
-                {
-                    Id = aplikacija.Id,
-                    Name = aplikacija.Name,
-                    Url = aplikacija.Url,
-                    Versions = aplikacija.Versions.Select(Create).ToList()
-                };
-            return new ApplicationModel()
+            var app = new ApplicationModel
             {
                 Id = aplikacija.Id,
                 Name = aplikacija.Name,
                 Url = aplikacija.Url,
-                Versions = aplikacija.Versions.Select(Create).ToList()
+                Versions = aplikacija.Versions.Select(x => CreateAppVersionModel(x, aplikacija.Id, context)).ToList(),
             };
+            return app;
+        }
 
-            VersionModel Create(Version x)
+        private static VersionModel CreateAppVersionModel(Version x, int id, AppContext context)
+        {
+            var analysis = context.AnalysesApplication.FirstOrDefault(v => v.ApplicationId == id && v.VersionId == x.Id);
+            return new VersionModel()
             {
-                return new VersionModel()
-                {
-                    Id = x.Id,
-                    Date = x.Date,
-                    VersionName = x.VersionName
-                };
-            }
+                Id = x.Id,
+                Date = x.Date,
+                VersionName = x.VersionName,
+                AnalysisId = analysis?.Id ?? 0
+            };
         }
 
         internal HeuristicModel Create(Heuristic x)
@@ -49,6 +44,15 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
+        internal CheckedHeuristicModel CreateCheckedHeuristicModel(Heuristic x)
+        {
+            return new CheckedHeuristicModel()
+            {
+                Id = x.Id,
+                Checked = false,
+                HeuristicText = x.HeuristicText
+            };
+        }
         public VersionModel Create(Infrastructure.Database.Entities.Version verzija, AppContext homeContext)
         {
             return new VersionModel()
@@ -58,6 +62,7 @@ namespace HeuristicAnalysis.API.Controllers
                 VersionName = verzija.VersionName
             };
         }
+
 
         public AnalysisModel Create(Analysis analiza, AppContext context)
         {
@@ -95,11 +100,12 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        public GroupModel Create(Group grupa, AppContext context)
+        public GroupModel CreateWithCheckedFalse(Group grupa, AppContext context)
         {
             return new GroupModel()
             {
                 Id = grupa.Id,
+                Checked = false,
                 GroupName = grupa.GroupName,
                 NumberOfUsers = 5
             };
@@ -133,6 +139,29 @@ namespace HeuristicAnalysis.API.Controllers
                 Users = userList
             };
             return groupWithUsers;
+        }
+
+        public CompleteAnalysisDetails CreateCompleteAnalysisDetailsModel(int analisysId, AppContext context)
+        {
+            var analisys = context.AnalysesApplication.Find(analisysId);
+            var groups = new List<string>();
+            var heuristics = new List<string>();
+            var groupEntitiess = context.AnalysesGroups.Where(g => g.AnalysisId == analisys.Id)
+                .ToList();
+            var heuristicEntities = context.AnalysesHeuristics.Where(h => h.AnalysisId == analisys.Id).ToList();
+            var version = context.Versions.FirstOrDefault(h => h.Id == analisys.VersionId);
+            foreach (var analysesGroups in groupEntitiess) groups.Add(context.Groups.FirstOrDefault(g => g.Id == analysesGroups.Id).GroupName);
+            foreach (var heuristic in heuristicEntities) heuristics.Add(context.Heuristics.FirstOrDefault(g => g.Id == heuristic.HeuristicId).HeuristicText);
+            var app = new Repository<Application>(context).Get(analisys.ApplicationId);
+
+            var analysis = new CompleteAnalysisDetails()
+            {
+                ApplicationName = app.Name,
+                VersionName = version.VersionName,
+                Groups = groups,
+                Heuristics = heuristics
+            };
+            return analysis;
         }
     }
 

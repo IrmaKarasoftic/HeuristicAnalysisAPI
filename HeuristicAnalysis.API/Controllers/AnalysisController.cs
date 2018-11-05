@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Xml;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
 using HeuristicAnalysis.Infrastructure.Database.Entities;
@@ -30,8 +32,8 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var analisys = Repository.Get(id);
-                return Ok(analisys);
+                var analysisModel = Factory.CreateCompleteAnalysisDetailsModel(id, Repository.HomeContext());
+                return Ok(analysisModel);
             }
             catch (Exception ex)
             {
@@ -40,13 +42,63 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/Analysis/user/{id:int}")]
+        public IHttpActionResult GetAnalysesByUserId(int id)
+        {
+            try
+            {
+                var context = Repository.HomeContext();
+                var groupIds = context.UserGroups.Where(g => g.UserId == id).Select(group => group.Id).ToList();
+                var analyses = context.AnalysesGroups.Where(a => groupIds.Contains(a.GroupId)).Select(analysis => analysis.AnalysisId).ToList();
+                var analysisList = new List<AnalysisModel>();
+                foreach (var analysisModel in analyses)
+                {
+                    var model = context.Analysis.Find(analysisModel);
+                    analysisList.Add(Factory.Create(model, context));
+                }
+                return Ok(analysisList);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
-        public IHttpActionResult Post(AnalysisModel model)
+        public IHttpActionResult Post(CreateAnalysisModel model)
         {
             try
             {
                 if (model == null) return BadRequest("Model is null");
-                Repository.Insert(Parser.Create(model, Repository.HomeContext()));
+                var analysis = new AnalysisApplication()
+                {
+                    ApplicationId = model.AppId,
+                    VersionId = model.VersionId
+                };
+                var context = Repository.HomeContext();
+                new Repository<AnalysisApplication>(context).Insert(analysis);
+                var groups = model.Groups.Where(g => g.Checked);
+                foreach (var groupModel in groups)
+                {
+                    var ag = new AnalysesGroups()
+                    {
+                        GroupId = groupModel.Id,
+                        AnalysisId = analysis.Id
+                    };
+                    new Repository<AnalysesGroups>(context).Insert(ag);
+                }
+
+                var heuristics = model.Heuristics.Where(g => g.Checked);
+                foreach (var heuristic in heuristics)
+                {
+                    var ah = new AnalysesHeuristics()
+                    {
+                        HeuristicId = heuristic.Id,
+                        AnalysisId = analysis.Id
+                    };
+                    new Repository<AnalysesHeuristics>(context).Insert(ah);
+                }
                 return Ok();
             }
             catch (Exception ex)

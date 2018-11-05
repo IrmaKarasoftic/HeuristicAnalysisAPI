@@ -16,7 +16,7 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var groups = Repository.Get().ToList().Select(x => Factory.Create(x, Repository.HomeContext())).ToList();
+                var groups = Repository.Get().ToList().Select(x => Factory.CreateWithCheckedFalse(x, Repository.HomeContext())).ToList();
                 return Ok(groups);
             }
             catch (Exception ex)

@@ -245,7 +245,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CompleteAnalysisDetails.cs" />
+    <Compile Include="Models\CreateAnalysisModel.cs" />
     <Compile Include="Models\AssignUserModel.cs" />
+    <Compile Include="Models\CheckedHeuristicModel.cs" />
     <Compile Include="Models\GroupWithUsers.cs" />
     <Compile Include="Models\HeuristicModel.cs" />
     <Compile Include="Models\AnalysisModel.cs" />

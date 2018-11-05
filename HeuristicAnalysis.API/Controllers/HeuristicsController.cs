@@ -18,7 +18,7 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var questions = Repository.Get().ToList().Select(x => Factory.Create(x)).ToList();
+                var questions = Repository.Get().ToList().Select(x => Factory.CreateCheckedHeuristicModel(x)).ToList();
                 return Ok(questions);
             }
             catch (Exception ex)
