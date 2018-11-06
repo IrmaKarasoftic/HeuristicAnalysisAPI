@@ -51,11 +51,16 @@ namespace HeuristicAnalysis.API.Controllers
                 var context = Repository.HomeContext();
                 var groupIds = context.UserGroups.Where(g => g.UserId == id).Select(group => group.Id).ToList();
                 var analyses = context.AnalysesGroups.Where(a => groupIds.Contains(a.GroupId)).Select(analysis => analysis.AnalysisId).ToList();
+
                 var analysisList = new List<AnalysisModel>();
-                foreach (var analysisModel in analyses)
+                foreach (var analysisId in analyses)
                 {
-                    var model = context.Analysis.Find(analysisModel);
-                    analysisList.Add(Factory.Create(model, context));
+                    var appAnalyses = context.AnalysesApplication.Where(a => a.Id == analysisId).ToList();
+                    foreach (var analysisApplication in appAnalyses)
+                    {
+                        var model = context.Analysis.Find(analysisApplication.Id);
+                        analysisList.Add(Factory.CreateAnalysisModel(model, analysisApplication.VersionId, context));
+                    }
                 }
                 return Ok(analysisList);
             }

@@ -75,6 +75,20 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
+        public AnalysisModel CreateAnalysisModel(Analysis analiza, int versionId, AppContext context)
+        {
+            var app = Create(context.Applications.Find(analiza.ApplicationId), context);
+            var user = Create(context.Users.Find(analiza.ReviewerId), context);
+            var version = Create(context.Versions.Find(versionId), context);
+            return new AnalysisModel()
+            {
+                Id = analiza.Id,
+                Aplikacija = app,
+                Korisnik = user,
+                Verzija = version
+            };
+        }
+
         public QuestionModel Create(QuestionAnswer pitanje, AppContext context)
         {
             return new QuestionModel()
