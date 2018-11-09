@@ -7,13 +7,13 @@ namespace HeuristicAnalysis.Infrastructure.Database
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class added_Images : IMigrationMetadata
+    public sealed partial class AddedTitle : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(added_Images));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedTitle));
         
         string IMigrationMetadata.Id
         {
-            get { return "201810312145340_added_Images"; }
+            get { return "201811092158206_AddedTitle"; }
         }
         
         string IMigrationMetadata.Source

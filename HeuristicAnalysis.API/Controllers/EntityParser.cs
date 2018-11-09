@@ -86,6 +86,7 @@ namespace HeuristicAnalysis.API.Controllers
             return new Heuristic()
             {
                 Id = model.Id,
+                HeuristicTitle = model.HeuristicTitle,
                 HeuristicText = model.HeuristicText
             };
         }
