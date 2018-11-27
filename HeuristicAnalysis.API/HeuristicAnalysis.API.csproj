@@ -254,6 +254,8 @@
     <Compile Include="Models\AnalysisModel.cs" />
     <Compile Include="Models\ApplicationModel.cs" />
     <Compile Include="Models\IdImageModel.cs" />
+    <Compile Include="Models\HeuristicWithAnswer.cs" />
+    <Compile Include="Models\AnswerModel.cs" />
     <Compile Include="Models\UserGroupModel.cs" />
     <Compile Include="Models\UserWithAssignedFlag.cs" />
     <Compile Include="Models\UserModel.cs" />

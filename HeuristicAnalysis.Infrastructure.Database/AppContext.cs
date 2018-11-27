@@ -21,6 +21,7 @@ namespace HeuristicAnalysis.Infrastructure.Database
         public DbSet<User> Users { get; set; }
         public DbSet<QuestionAnswer> QuestionAnswers { get; set; }
         public DbSet<Heuristic> Heuristics { get; set; }
+        public DbSet<HeuristicList> HeuristicLists { get; set; }
         public DbSet<Entities.Version> Versions { get; set; }
         public DbSet<Analysis> Analysis { get; set; }
 

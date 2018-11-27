@@ -158,23 +158,20 @@ namespace HeuristicAnalysis.API.Controllers
         public CompleteAnalysisDetails CreateCompleteAnalysisDetailsModel(int analisysId, AppContext context)
         {
             var analisys = context.AnalysesApplication.Find(analisysId);
-            //var groups = new List<string>();
             var heuristics = new List<Heuristic>();
-            var groupEntitiess = context.AnalysesGroups.Where(g => g.AnalysisId == analisys.Id)
-                .ToList();
+            var groups = new List<Group>();
             var heuristicEntities = context.AnalysesHeuristics.Where(h => h.AnalysisId == analisys.Id).ToList();
+            var groupEntites = context.AnalysesGroups.Where(h => h.AnalysisId == analisys.Id).ToList();
             var version = context.Versions.FirstOrDefault(h => h.Id == analisys.VersionId);
-            var a = context.Groups.ToList();
-            var b = a.FirstOrDefault(g => g.Id == groupEntitiess[0].Id);
-            //foreach (var analysesGroups in groupEntitiess) groups.Add(context.Groups.FirstOrDefault(g => g.Id == analysesGroups.Id).GroupName);
             foreach (var heuristic in heuristicEntities) heuristics.Add(context.Heuristics.FirstOrDefault(g => g.Id == heuristic.HeuristicId));
+            foreach (var group in groupEntites) groups.Add(context.Groups.FirstOrDefault(g => g.Id == group.GroupId));
             var app = new Repository<Application>(context).Get(analisys.ApplicationId);
 
             var analysis = new CompleteAnalysisDetails()
             {
                 ApplicationName = app.Name,
                 VersionName = version.VersionName,
-                //Groups = groups,
+                Groups = groups,
                 Heuristics = heuristics
             };
             return analysis;
