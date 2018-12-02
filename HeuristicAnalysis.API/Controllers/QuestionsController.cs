@@ -9,9 +9,9 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Controllers
 {
-    public class QuestionsController : HomeController<QuestionAnswer>
+    public class QuestionsController : HomeController<AnsweredQuestion>
     {
-        public QuestionsController(Repository<QuestionAnswer> repo) : base(repo) { }
+        public QuestionsController(Repository<AnsweredQuestion> repo) : base(repo) { }
 
         [HttpGet]
         public IHttpActionResult GetAll()
@@ -47,7 +47,7 @@ namespace HeuristicAnalysis.API.Controllers
             try
             {
                 if (model == null) return BadRequest("Model is null");
-                Repository.Insert(Parser.Create(model, Repository.HomeContext()));
+                Repository.Insert(Parser.Create(model));
                 return Ok();
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace HeuristicAnalysis.API.Controllers
             {
                 var question = Repository.Get(id);
                 if (question == null) return NotFound();
-                Repository.Update(Parser.Create(model, Repository.HomeContext()), id);
+                Repository.Update(Parser.Create(model), id);
                 return Ok();
             }
             catch (Exception ex)

@@ -34,7 +34,7 @@ namespace HeuristicAnalysis.API.Controllers
             try
             {
                 var context = Repository.HomeContext();
-                var form = Factory.CreateAnalysisApplicationFormModel(new Repository<AnalysisApplicationForm>(context).Get(id));
+                var form = Factory.CreateAnalysisApplicationFormModel(new Repository<Analysis>(context).Get(id));
                 return Ok(form);
             }
             catch (Exception ex)
@@ -55,8 +55,8 @@ namespace HeuristicAnalysis.API.Controllers
                 var user = usersRepo.Get(id);
                 var groupIds = context.UserGroups.Where(g => g.Users.Select(userr => userr.Id).Contains(user.Id)).Select(ug => ug.Id).ToList();
                 var analysis = context.AnalysisApplicationForms.Where(f => f.Groups.Any(g => groupIds.Contains(g.Id))).ToList();
-                var analysisList = analysis.Select(a => Factory.CreateAnalysisModel(a, context));
-                return Ok(analysisList.Distinct());
+                var analysisList = analysis.Select(a => Factory.CreateAnalysisModel(a, context, user)).Distinct();
+                return Ok(analysisList);
             }
             catch (Exception ex)
             {

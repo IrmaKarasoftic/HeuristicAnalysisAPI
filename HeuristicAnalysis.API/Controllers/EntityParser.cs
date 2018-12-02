@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
 using HeuristicAnalysis.Infrastructure.Database.Entities;
+using AppContext = HeuristicAnalysis.Infrastructure.Database.AppContext;
 using Version = HeuristicAnalysis.Infrastructure.Database.Entities.Version;
 
 namespace HeuristicAnalysis.API.Controllers
@@ -11,12 +13,9 @@ namespace HeuristicAnalysis.API.Controllers
     {
         public Analysis Create(AnalysisModel model, Infrastructure.Database.AppContext context)
         {
+            //TODO
             return new Analysis()
             {
-                Id = model.Id,
-                ApplicationId = model.Aplikacija.Id,
-                ReviewerId = model.Korisnik.Id,
-                VersionId = model.Verzija.Id
             };
         }
 
@@ -51,16 +50,56 @@ namespace HeuristicAnalysis.API.Controllers
 
 
 
-        public QuestionAnswer Create(QuestionModel pitanje, Infrastructure.Database.AppContext context)
+        public AnsweredQuestion Create(QuestionModel question)
         {
-            return new QuestionAnswer()
+            return new AnsweredQuestion()
             {
-                Id = pitanje.Id,
-                Heuristic = pitanje.Heuristic
+                Id = question.Id,
+                HeuristicText = question.HeuristicText,
+                HeuristicTitle = question.HeuristicTitle,
             };
         }
 
-        internal QuestionAnswer Create(CreateFilledInHeuristicModel heuristic)
+        public Analysis CreateAnalysis(FillOutAnalysisModel model, AppContext context)
+        {
+            var analysis = new Analysis()
+            {
+                Reviewer = context.Users.FirstOrDefault(u => u.Id == model.UserId),
+                Version = context.Versions.FirstOrDefault(v => v.AnalysisApplicationForm.Id == model.AnalysisId),
+                QuestionsAndAnswers = new List<AnsweredQuestion>()
+            };
+            var heuristics = context.AnalysisApplicationForms.Find(model.AnalysisId).Heuristics;
+            var defaultAnswer = new Answer()
+            {
+                Description = "",
+                Location = "",
+                Level = 1,
+                Recommendation = ""
+            };
+            foreach (var heuristic in heuristics)
+            {
+                var qa = new AnsweredQuestion()
+                {
+                    HeuristicText = heuristic.HeuristicText,
+                    HeuristicTitle = heuristic.HeuristicTitle,
+                    Answers = new List<Answer>()
+                };
+                qa.Answers.Add(defaultAnswer);
+                analysis.QuestionsAndAnswers.Add(qa);
+            }
+            new Repository<Analysis>(context).Insert(analysis);
+            return analysis;
+        }
+
+        internal HeuristicImage Create(ImageSrc i)
+        {
+            return new HeuristicImage()
+            {
+                Img = i.Src
+            };
+        }
+
+        internal AnsweredQuestion Create(CreateFilledInHeuristicModel heuristic)
         {
 
             var heuristicImages = new List<HeuristicImage>();
@@ -72,14 +111,11 @@ namespace HeuristicAnalysis.API.Controllers
                 };
                 heuristicImages.Add(img);
             }
-            var qa = new QuestionAnswer
+            var qa = new AnsweredQuestion
             {
                 Id = heuristic.Id,
-                Heuristic = heuristic.HeuristicText,
-                Description = heuristic.Description,
-                Location = heuristic.Location,
-                Recommendation = heuristic.Recommendation,
-                Level = heuristic.Level,
+                HeuristicTitle = heuristic.HeuristicTitle,
+                HeuristicText = heuristic.HeuristicText,
                 Images = heuristicImages
             };
             return qa;

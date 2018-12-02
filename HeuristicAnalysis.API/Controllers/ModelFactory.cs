@@ -22,6 +22,16 @@ namespace HeuristicAnalysis.API.Controllers
             };
             return app;
         }
+        public ApplicationModel CreateWithoutVersion(Application aplikacija)
+        {
+            var app = new ApplicationModel
+            {
+                Id = aplikacija.Id,
+                Name = aplikacija.Name,
+                Url = aplikacija.Url,
+            };
+            return app;
+        }
 
         private static VersionModel Create(Version v, Application app)
         {
@@ -45,23 +55,44 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        internal CompleteAnalysisDetails CreateAnalysisApplicationFormModel(AnalysisApplicationForm analysisApplicationForm)
+        internal CompleteAnalysisDetails CreateAnalysisApplicationFormModel(Analysis analysis)
         {
             return new CompleteAnalysisDetails()
             {
-                AnalysisId = analysisApplicationForm.Id,
-                Heuristics = analysisApplicationForm.Heuristics.Select(CreateHeursiHeuristicModel).ToList(),
-                Groups = analysisApplicationForm.Groups.Select(CreateGroupModel).ToList()
+                AnalysisId = analysis.Id,
+                Heuristics = analysis.QuestionsAndAnswers.Select(CreateHeuristicModelWithAnswers).ToList(),
             };
         }
 
-        private HeuristicModel CreateHeursiHeuristicModel(Heuristic heuristics)
+        private QuestionModel CreateHeuristicModelWithAnswers(AnsweredQuestion qa)
         {
-            return new HeuristicModel()
+            var hwa = new QuestionModel()
             {
-                Id = heuristics.Id,
-                HeuristicText = heuristics.HeuristicText,
-                HeuristicTitle = heuristics.HeuristicTitle
+                Id = qa.Id,
+                HeuristicText = qa.HeuristicText,
+                HeuristicTitle = qa.HeuristicTitle,
+                Answers = qa.Answers.Select(Create).ToList()
+            };
+            return hwa;
+        }
+
+        private static ImageSrc Create(HeuristicImage i)
+        {
+            return new ImageSrc()
+            {
+                Src = i.Img
+            };
+        }
+        private static AnswerModel Create(Answer answer)
+        {
+            return new AnswerModel()
+            {
+                Id = answer.Id,
+                Description = answer.Description,
+                Location = answer.Location,
+                Recommendation = answer.Recommendation,
+                Level = answer.Level,
+                Images = answer.Images.Select(Create).ToList(),
             };
         }
 
@@ -116,37 +147,56 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        public AnalysisModel CreateAnalysisModel(AnalysisApplicationForm analiza, AppContext context)
+        public AnalysisModel CreateAnalysisModel(AnalysisApplicationForm analiza, AppContext context, User user)
         {
             var vers = context.Versions.SingleOrDefault(v => v.AnalysisApplicationForm.Id == analiza.Id);
             var version = Create(vers);
             var app = Create(context.Applications.SingleOrDefault(a => a.Versions.Select(ver=> ver.Id).Contains(vers.Id)));
+            var created = context.Analyses.Any(a => a.Reviewer.Id == user.Id && a.Version.Id == version.Id);
             return new AnalysisModel()
             {
-                Id = vers.AnalysisApplicationForm.Id,
+                Id = analiza.Id,
                 Verzija = version,
-                Aplikacija = app
+                Aplikacija = app,
+                Created = created,
+                AnalysisFormId = vers.AnalysisApplicationForm.Id,
+                Korisnik = Create(user)
+            };
+        }
+
+        private UserModel Create(User user)
+        {
+            return new UserModel()
+            {
+                Id = user.Id,
+                Admin = user.Admin,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Occupation = user.Occupation,
+                DateOfBirth = user.DateOfBirth.ToShortDateString(),
+                Name = user.FirstName + " " + user.LastName
             };
         }
 
         public AnalysisModel CreateAnalysisModel(Analysis analiza, AppContext context)
         {
             var version = Create(context.Versions.SingleOrDefault(v => v.AnalysisApplicationForm.Id == analiza.Id));
-            var app = Create(context.Applications.SingleOrDefault(a => a.Id == version.Id));
+            var app = CreateWithoutVersion(context.Applications.SingleOrDefault(a => a.Id == version.Id));
             return new AnalysisModel()
             {
+                Id = analiza.Id,
                 Verzija = version,
                 Aplikacija = app
             };
         }
 
-        public QuestionModel Create(QuestionAnswer pitanje, AppContext context)
+        public QuestionModel Create(AnsweredQuestion question, AppContext context)
         {
             return new QuestionModel()
             {
-                Id = pitanje.Id,
-                Heuristic = pitanje.Heuristic,
-                Description = pitanje.Description
+                Id = question.Id,
+                HeuristicTitle = question.HeuristicTitle,
+                HeuristicText = question.HeuristicText,
             };
         }
 
