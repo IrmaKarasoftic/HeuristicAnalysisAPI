@@ -49,28 +49,17 @@
   <ItemGroup>
     <Compile Include="AppContext.cs" />
     <Compile Include="Configuration.cs" />
-    <Compile Include="Entities\AnalysesGroups.cs" />
-    <Compile Include="Entities\AnalysesHeuristics.cs" />
     <Compile Include="Entities\Analysis.cs" />
-    <Compile Include="Entities\AnalysisApplication.cs" />
+    <Compile Include="Entities\AnalysisApplicationForm.cs" />
     <Compile Include="Entities\Application.cs" />
     <Compile Include="Entities\HeuristicList.cs" />
     <Compile Include="Entities\Heuristic.cs" />
-    <Compile Include="Entities\UploadedImage.cs" />
+    <Compile Include="Entities\HeuristicImage.cs" />
     <Compile Include="Entities\UserGroup.cs" />
-    <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\QuestionAnswer.cs" />
     <Compile Include="Entities\Version.cs" />
     <Compile Include="Interface.cs" />
-    <Compile Include="Migrations\201811092158206_AddedTitle.cs" />
-    <Compile Include="Migrations\201811092158206_AddedTitle.Designer.cs">
-      <DependentUpon>201811092158206_AddedTitle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811101955362_AddedHeuristicListTable.cs" />
-    <Compile Include="Migrations\201811101955362_AddedHeuristicListTable.Designer.cs">
-      <DependentUpon>201811101955362_AddedHeuristicListTable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
   </ItemGroup>
@@ -78,14 +67,8 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811092158206_AddedTitle.resx">
-      <DependentUpon>201811092158206_AddedTitle.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811101955362_AddedHeuristicListTable.resx">
-      <DependentUpon>201811101955362_AddedHeuristicListTable.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

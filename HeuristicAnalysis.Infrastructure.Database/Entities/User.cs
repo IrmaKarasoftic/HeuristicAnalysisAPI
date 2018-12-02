@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HeuristicAnalysis.Infrastructure.Database.Entities
 {
@@ -10,5 +11,6 @@ namespace HeuristicAnalysis.Infrastructure.Database.Entities
         public string Occupation { get; set; }
         public DateTime DateOfBirth { get; set; }
         public bool Admin { get; set; }
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
     }
 }

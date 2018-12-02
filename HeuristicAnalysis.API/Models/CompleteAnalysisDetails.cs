@@ -8,10 +8,8 @@ namespace HeuristicAnalysis.API.Models
 {
     public class CompleteAnalysisDetails
     {
-        public int Id { get; set; }
-        public string ApplicationName { get; set; }
-        public string VersionName { get; set; }
-        public List<Heuristic> Heuristics { get; set; }
-        public List<Group> Groups { get; set; }
+        public int AnalysisId { get; set; }
+        public List<HeuristicModel> Heuristics { get; set; }
+        public List<GroupModel> Groups { get; set; }
     }
 }

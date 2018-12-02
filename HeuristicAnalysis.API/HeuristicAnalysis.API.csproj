@@ -231,13 +231,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\AnalysisApplicationController.cs" />
     <Compile Include="Controllers\AnalysisController.cs" />
     <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\EntityParser.cs" />
     <Compile Include="Controllers\HeuristicsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\GroupsController.cs" />
+    <Compile Include="Controllers\UserGroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModelFactory.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
@@ -245,17 +245,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FillOutAnalysisModel.cs" />
     <Compile Include="Models\CompleteAnalysisDetails.cs" />
     <Compile Include="Models\CreateAnalysisModel.cs" />
     <Compile Include="Models\AssignUserModel.cs" />
     <Compile Include="Models\CheckedHeuristicModel.cs" />
     <Compile Include="Models\GroupWithUsers.cs" />
+    <Compile Include="Models\CreateFilledInHeuristicModel.cs" />
     <Compile Include="Models\HeuristicModel.cs" />
     <Compile Include="Models\AnalysisModel.cs" />
     <Compile Include="Models\ApplicationModel.cs" />
     <Compile Include="Models\IdImageModel.cs" />
     <Compile Include="Models\HeuristicWithAnswer.cs" />
     <Compile Include="Models\AnswerModel.cs" />
+    <Compile Include="Models\ImageSrc.cs" />
     <Compile Include="Models\UserGroupModel.cs" />
     <Compile Include="Models\UserWithAssignedFlag.cs" />
     <Compile Include="Models\UserModel.cs" />

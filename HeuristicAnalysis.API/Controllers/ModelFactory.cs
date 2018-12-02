@@ -11,27 +11,78 @@ namespace HeuristicAnalysis.API.Controllers
 {
     public class ModelFactory
     {
-        public ApplicationModel Create(Application aplikacija, AppContext context)
+        public ApplicationModel Create(Application aplikacija)
         {
             var app = new ApplicationModel
             {
                 Id = aplikacija.Id,
                 Name = aplikacija.Name,
                 Url = aplikacija.Url,
-                Versions = aplikacija.Versions.Select(x => CreateAppVersionModel(x, aplikacija.Id, context)).ToList(),
+                Versions = aplikacija.Versions.Select(v => Create(v, aplikacija)).ToList()
             };
             return app;
         }
 
-        private static VersionModel CreateAppVersionModel(Version x, int id, AppContext context)
+        private static VersionModel Create(Version v, Application app)
         {
-            var analysis = context.AnalysesApplication.FirstOrDefault(v => v.ApplicationId == id && v.VersionId == x.Id);
             return new VersionModel()
             {
+                Id = v.Id,
+                VersionName = v.VersionName,
+                Date = v.Date,
+                ApplicationId = app.Id,
+                AnalysisId = v.AnalysisApplicationForm?.Id ?? 0
+            };
+        }
+
+        private static VersionModel Create(Version v)
+        {
+            return new VersionModel()
+            {
+                Id = v.Id,
+                VersionName = v.VersionName,
+                Date = v.Date
+            };
+        }
+
+        internal CompleteAnalysisDetails CreateAnalysisApplicationFormModel(AnalysisApplicationForm analysisApplicationForm)
+        {
+            return new CompleteAnalysisDetails()
+            {
+                AnalysisId = analysisApplicationForm.Id,
+                Heuristics = analysisApplicationForm.Heuristics.Select(CreateHeursiHeuristicModel).ToList(),
+                Groups = analysisApplicationForm.Groups.Select(CreateGroupModel).ToList()
+            };
+        }
+
+        private HeuristicModel CreateHeursiHeuristicModel(Heuristic heuristics)
+        {
+            return new HeuristicModel()
+            {
+                Id = heuristics.Id,
+                HeuristicText = heuristics.HeuristicText,
+                HeuristicTitle = heuristics.HeuristicTitle
+            };
+        }
+
+        internal GroupModel CreateWithCheckedFalse(UserGroup x, AppContext appContext)
+        {
+            return new GroupModel()
+            {
                 Id = x.Id,
-                Date = x.Date,
-                VersionName = x.VersionName,
-                AnalysisId = analysis?.Id ?? 0
+                GroupName = x.GroupName,
+                Checked = false,
+                NumberOfUsers = x.Users.Count
+            };
+        }
+        internal GroupModel CreateGroupModel(UserGroup x)
+        {
+            return new GroupModel()
+            {
+                Id = x.Id,
+                GroupName = x.GroupName,
+                Checked = false,
+                NumberOfUsers = x.Users.Count
             };
         }
 
@@ -65,27 +116,27 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-
-        public AnalysisModel Create(Analysis analiza, AppContext context)
+        public AnalysisModel CreateAnalysisModel(AnalysisApplicationForm analiza, AppContext context)
         {
+            var vers = context.Versions.SingleOrDefault(v => v.AnalysisApplicationForm.Id == analiza.Id);
+            var version = Create(vers);
+            var app = Create(context.Applications.SingleOrDefault(a => a.Versions.Select(ver=> ver.Id).Contains(vers.Id)));
             return new AnalysisModel()
             {
-                Id = analiza.Id,
-                Aplikacija = Create(new Repository<Application>(context).Get(analiza.ApplicationId), context),
-                Korisnik = Create(new Repository<User>(context).Get(analiza.ReviewerId), context),
-                Verzija = Create(new Repository<Infrastructure.Database.Entities.Version>(context).Get(analiza.VersionId), context),
+                Id = vers.AnalysisApplicationForm.Id,
+                Verzija = version,
+                Aplikacija = app
             };
         }
 
-        public AnalysisModel CreateAnalysisModel(AnalysisApplication analiza, int versionId, AppContext context)
+        public AnalysisModel CreateAnalysisModel(Analysis analiza, AppContext context)
         {
-            var app = Create(context.Applications.Find(analiza.ApplicationId), context);
-            var version = Create(context.Versions.Find(versionId), context);
+            var version = Create(context.Versions.SingleOrDefault(v => v.AnalysisApplicationForm.Id == analiza.Id));
+            var app = Create(context.Applications.SingleOrDefault(a => a.Id == version.Id));
             return new AnalysisModel()
             {
-                Id = analiza.Id,
-                Aplikacija = app,
-                Verzija = version
+                Verzija = version,
+                Aplikacija = app
             };
         }
 
@@ -114,68 +165,46 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        public GroupModel CreateWithCheckedFalse(Group grupa, AppContext context)
-        {
-            return new GroupModel()
-            {
-                Id = grupa.Id,
-                Checked = false,
-                GroupName = grupa.GroupName,
-                NumberOfUsers = 5
-            };
-        }
-
         public GroupWithUsers CreateGroupWithUsersModel(int id, AppContext context)
         {
-            var group = new Repository<Group>(context).Get(id);
-            var userGroups = new Repository<UserGroup>(context).Get().ToList();
+            var userGroup = new Repository<UserGroup>(context).Get().FirstOrDefault(ug => ug.Id == id);
             var allUsers = new Repository<User>(context).Get().ToList();
-            var userList = new List<UserWithAssignedFlag>();
-            foreach (var user in allUsers)
-            {
-                var userModel = new UserWithAssignedFlag()
-                {
-                    Id = user.Id,
-                    DateOfBirth = user.DateOfBirth.ToShortTimeString(),
-                    Admin = user.Admin,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Name = user.LastName + " " + user.FirstName,
-                    Occupation = user.Occupation,
-                    Assigned = false
-                };
-                userModel.Assigned = userGroups.Any(g => g.GroupId == group.Id && user.Id == g.UserId);
-                userList.Add(userModel);
-            }
+
             var groupWithUsers = new GroupWithUsers
             {
                 GroupId = id,
-                Users = userList
+                Users = allUsers.Select(u => Create(u, userGroup)).ToList()
             };
             return groupWithUsers;
         }
 
-        public CompleteAnalysisDetails CreateCompleteAnalysisDetailsModel(int analisysId, AppContext context)
+        private static UserWithAssignedFlag Create(User u, UserGroup userGroup)
         {
-            var analisys = context.AnalysesApplication.Find(analisysId);
-            var heuristics = new List<Heuristic>();
-            var groups = new List<Group>();
-            var heuristicEntities = context.AnalysesHeuristics.Where(h => h.AnalysisId == analisys.Id).ToList();
-            var groupEntites = context.AnalysesGroups.Where(h => h.AnalysisId == analisys.Id).ToList();
-            var version = context.Versions.FirstOrDefault(h => h.Id == analisys.VersionId);
-            foreach (var heuristic in heuristicEntities) heuristics.Add(context.Heuristics.FirstOrDefault(g => g.Id == heuristic.HeuristicId));
-            foreach (var group in groupEntites) groups.Add(context.Groups.FirstOrDefault(g => g.Id == group.GroupId));
-            var app = new Repository<Application>(context).Get(analisys.ApplicationId);
-
-            var analysis = new CompleteAnalysisDetails()
+            var assigned = userGroup.Users.Select(user => user.Id).Contains(u.Id);
+            return new UserWithAssignedFlag()
             {
-                ApplicationName = app.Name,
-                VersionName = version.VersionName,
-                Groups = groups,
-                Heuristics = heuristics
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Name = u.FirstName + ' ' + u.LastName,
+                Assigned = assigned,
+                DateOfBirth = u.DateOfBirth.ToShortDateString(),
+                Occupation = u.Occupation,
+                Admin = u.Admin
             };
-            return analysis;
         }
+
+        private HeuristicModel CreateHeuristicWithImagesModel(Heuristic heuristic)
+        {
+            return new HeuristicModel()
+            {
+                Id = heuristic.Id,
+                HeuristicText = heuristic.HeuristicText,
+                HeuristicTitle = heuristic.HeuristicTitle,
+                Images = new List<HeuristicImage>()
+            };
+        }
+
     }
 
 }

@@ -6,6 +6,7 @@ using System.Xml;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
 using HeuristicAnalysis.Infrastructure.Database.Entities;
+using Version = HeuristicAnalysis.Infrastructure.Database.Entities.Version;
 
 namespace HeuristicAnalysis.API.Controllers
 {
@@ -18,7 +19,7 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var analisysList = Repository.Get().ToList().Select(x => Factory.Create(x, Repository.HomeContext())).ToList();
+                var analisysList = Repository.Get().ToList().Select(x => Factory.CreateAnalysisModel(x, Repository.HomeContext())).ToList();
                 return Ok(analisysList);
             }
             catch (Exception ex)
@@ -32,8 +33,9 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var analysisModel = Factory.CreateCompleteAnalysisDetailsModel(id, Repository.HomeContext());
-                return Ok(analysisModel);
+                var context = Repository.HomeContext();
+                var form = Factory.CreateAnalysisApplicationFormModel(new Repository<AnalysisApplicationForm>(context).Get(id));
+                return Ok(form);
             }
             catch (Exception ex)
             {
@@ -49,18 +51,11 @@ namespace HeuristicAnalysis.API.Controllers
             try
             {
                 var context = Repository.HomeContext();
-                var groupIds = context.UserGroups.Where(g => g.UserId == id).Select(group => group.GroupId).ToList();
-                var analyses = context.AnalysesGroups.Where(a => groupIds.Contains(a.GroupId)).Select(analysis => analysis.AnalysisId).Distinct().ToList();
-                var analysisList = new List<AnalysisModel>();
-                foreach (var analysisId in analyses)
-                {
-                    var appAnalyses = context.AnalysesApplication.Where(a => a.Id == analysisId).ToList();
-                    foreach (var analysisApplication in appAnalyses)
-                    {
-                        var model = context.AnalysesApplication.Find(analysisApplication.Id);
-                        analysisList.Add(Factory.CreateAnalysisModel(model, analysisApplication.VersionId, context));
-                    }
-                }
+                var usersRepo = new Repository<User>(context);
+                var user = usersRepo.Get(id);
+                var groupIds = context.UserGroups.Where(g => g.Users.Select(userr => userr.Id).Contains(user.Id)).Select(ug => ug.Id).ToList();
+                var analysis = context.AnalysisApplicationForms.Where(f => f.Groups.Any(g => groupIds.Contains(g.Id))).ToList();
+                var analysisList = analysis.Select(a => Factory.CreateAnalysisModel(a, context));
                 return Ok(analysisList.Distinct());
             }
             catch (Exception ex)
@@ -74,35 +69,26 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                if (model == null) return BadRequest("Model is null");
-                var analysis = new AnalysisApplication()
-                {
-                    ApplicationId = model.AppId,
-                    VersionId = model.VersionId
-                };
                 var context = Repository.HomeContext();
-                new Repository<AnalysisApplication>(context).Insert(analysis);
-                var groups = model.Groups.Where(g => g.Checked);
-                foreach (var groupModel in groups)
-                {
-                    var ag = new AnalysesGroups()
-                    {
-                        GroupId = groupModel.Id,
-                        AnalysisId = analysis.Id
-                    };
-                    new Repository<AnalysesGroups>(context).Insert(ag);
-                }
+                var heuristicsRepo = new Repository<Heuristic>(context);
+                var groupRepo = new Repository<UserGroup>(context);
+                var versionRepo = new Repository<Version>(context);
+                if (model == null) return BadRequest("Model is null");
 
-                var heuristics = model.Heuristics.Where(g => g.Checked);
+                var version = new Repository<Version>(context).Get(model.VersionId);
+                var groups = model.Groups.Where(h => h.Checked).Select(g => Parser.CreateGroupWithUsers(g, context)).ToList();
+                var heuristics = model.Heuristics.Where(h => h.Checked).ToList();
                 foreach (var heuristic in heuristics)
                 {
-                    var ah = new AnalysesHeuristics()
-                    {
-                        HeuristicId = heuristic.Id,
-                        AnalysisId = analysis.Id
-                    };
-                    new Repository<AnalysesHeuristics>(context).Insert(ah);
+                    var h = heuristicsRepo.Get(heuristic.Id);
+                    version.AnalysisApplicationForm.Heuristics.Add(h);
                 }
+                foreach (var group in groups)
+                {
+                    var g = groupRepo.Get(group.Id);
+                    version.AnalysisApplicationForm.Groups.Add(g);
+                }
+                versionRepo.Update(version, version.Id);
                 return Ok();
             }
             catch (Exception ex)

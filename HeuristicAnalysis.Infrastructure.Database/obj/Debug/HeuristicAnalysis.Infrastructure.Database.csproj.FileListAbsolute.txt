@@ -10,6 +10,3 @@ C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Da
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.pdb
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csprojAssemblyReference.cache
 C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csproj.CopyComplete
-C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.AddedTitle.resources
-C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csproj.GenerateResource.cache
-C:\Users\irmaka\Desktop\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.AddedHeuristicListTable.resources

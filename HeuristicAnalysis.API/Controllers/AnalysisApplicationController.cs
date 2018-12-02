@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
@@ -8,16 +9,16 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Controllers
 {
-    public class ApplicationsController : HomeController<Application>
+    public class AnalysisApplicationController : HomeController<AnalysisApplicationForm>
     {
-        public ApplicationsController(Repository<Application> repo) : base(repo) { }
+        public AnalysisApplicationController(Repository<AnalysisApplicationForm> repo) : base(repo) { }
 
         [HttpGet]
         public IHttpActionResult GetAll()
         {
             try
             {
-                var applications = Repository.Get().ToList().Select(x => Factory.Create(x)).ToList();
+                var applications = Repository.Get().ToList();
                 return Ok(applications);
             }
             catch (Exception ex)
@@ -41,12 +42,22 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Post(ApplicationModel model)
+        public IHttpActionResult Post(FillOutAnalysisModel model)
         {
             try
             {
+                var context = Repository.HomeContext();
                 if (model == null) return BadRequest("Model is null");
-                Repository.Insert(Parser.Create(model, Repository.HomeContext()));
+                var analysisForm = new AnalysisApplicationForm();
+                var heuristics = new List<Heuristic>();
+                foreach (var heuristic in model.Heuristics)
+                {
+                    var qa = Parser.Create(heuristic);
+                    //heuristics.Add(qa);
+                }
+
+                analysisForm.Heuristics = heuristics;
+                //Repository.Insert(Parser.Create(model, Repository.HomeContext()));
                 return Ok();
             }
             catch (Exception ex)
@@ -64,7 +75,7 @@ namespace HeuristicAnalysis.API.Controllers
             {
                 var application = Repository.Get(id);
                 if (application == null) return NotFound();
-                Repository.Update(Parser.Create(model, Repository.HomeContext()), id);
+                //Repository.Update(Parser.Create(model, Repository.HomeContext()), id);
                 return Ok();
             }
             catch (Exception ex)

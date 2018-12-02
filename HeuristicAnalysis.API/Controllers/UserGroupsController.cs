@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
@@ -7,9 +8,9 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Controllers
 {
-    public class GroupsController : HomeController<Group>
+    public class UserGroupsController : HomeController<UserGroup>
     {
-        public GroupsController(Repository<Group> repo) : base(repo) { }
+        public UserGroupsController(Repository<UserGroup> repo) : base(repo) { }
 
         [HttpGet]
         public IHttpActionResult GetAll()
@@ -40,7 +41,7 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpGet]
-        [Route("api/Groups/users/{id:int}")]
+        [Route("api/UserGroups/users/{id:int}")]
         public IHttpActionResult Get(int id)
         {
             try
@@ -55,26 +56,19 @@ namespace HeuristicAnalysis.API.Controllers
         }
 
         [HttpPost]
-        [Route("api/Groups/assign")]
+        [Route("api/UserGroups/assign")]
         public IHttpActionResult Assign(AssignUserModel model)
         {
             try
             {
-                var userGroupRepo = new Repository<UserGroup>(Repository.HomeContext());
+                var context = Repository.HomeContext();
+                var userGroup = Repository.Get(model.GroupId);
+                var user = new Repository<User>(context).Get(model.UserId);
                 if (model.Assign)
-                {
-                    var userGroup = new UserGroup()
-                    {
-                        GroupId = model.GroupId,
-                        UserId = model.UserId
-                    };
-                    userGroupRepo.Insert(userGroup);
-                }
+                    userGroup.Users.Add(user);
                 else
-                {
-                    var ugToDelete = userGroupRepo.Get().FirstOrDefault(ug => ug.UserId == model.UserId && ug.GroupId == model.GroupId);
-                    if (ugToDelete != null) userGroupRepo.Delete(ugToDelete.Id);
-                }
+                    userGroup.Users.Remove(user);
+                context.SaveChanges();
                 return Ok();
             }
             catch (Exception ex)
@@ -107,7 +101,7 @@ namespace HeuristicAnalysis.API.Controllers
             {
                 var group = Repository.Get(id);
                 if (group == null) return NotFound();
-                Repository.Update(Parser.Create(model, Repository.HomeContext()), id);
+              //  Repository.Update(Parser.Create(model, Repository.HomeContext()), id);
                 return Ok();
             }
             catch (Exception ex)

@@ -2,10 +2,9 @@
 
 namespace HeuristicAnalysis.Infrastructure.Database.Entities
 {
-    public class UploadedImage
+    public class HeuristicImage
     {
         public int Id { get; set; }
-        public int AnalysisId { get; set; }
         public string Img { get; set; }
     }
 }

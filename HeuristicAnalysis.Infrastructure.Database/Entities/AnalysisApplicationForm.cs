@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace HeuristicAnalysis.Infrastructure.Database.Entities
 {
-    public class AnalysesGroups
+    public class AnalysisApplicationForm
     {
         public int Id { get; set; }
-        public int AnalysisId { get; set; }
-        public int GroupId { get; set; }
+        public virtual ICollection<Heuristic> Heuristics { get; set; }
+        public virtual ICollection<UserGroup> Groups { get; set; }
     }
 }

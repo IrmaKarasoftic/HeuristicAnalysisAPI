@@ -11,5 +11,6 @@ namespace HeuristicAnalysis.Infrastructure.Database.Entities
         public string Location { get; set; }
         public string Recommendation { get; set; }
         public int Level { get; set; }
+        public virtual ICollection<HeuristicImage> Images { get; set; }
     }
 }
