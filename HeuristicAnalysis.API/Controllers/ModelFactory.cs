@@ -164,7 +164,7 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        private UserModel Create(User user)
+        public UserModel Create(User user)
         {
             return new UserModel()
             {
@@ -172,6 +172,7 @@ namespace HeuristicAnalysis.API.Controllers
                 Admin = user.Admin,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Email = user.Email,
                 Occupation = user.Occupation,
                 DateOfBirth = user.DateOfBirth.ToShortDateString(),
                 Name = user.FirstName + " " + user.LastName
@@ -209,6 +210,7 @@ namespace HeuristicAnalysis.API.Controllers
                 Admin = korisnik.Admin,
                 FirstName = korisnik.FirstName,
                 LastName = korisnik.LastName,
+                Email = korisnik.Email,
                 Name = korisnik.LastName + " " + korisnik.FirstName,
                 Occupation = korisnik.Occupation,
                 DateOfBirth = korisnik.DateOfBirth.ToShortDateString()
@@ -236,6 +238,7 @@ namespace HeuristicAnalysis.API.Controllers
                 Id = u.Id,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
+                Email = u.Email,
                 Name = u.FirstName + ' ' + u.LastName,
                 Assigned = assigned,
                 DateOfBirth = u.DateOfBirth.ToShortDateString(),

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
 using HeuristicAnalysis.Infrastructure.Database.Entities;
@@ -131,8 +133,40 @@ namespace HeuristicAnalysis.API.Controllers
             };
             return qa;
         }
+        public string ComputeSha256Hash(string rawData)
+        {
+            // Create a SHA256   
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
 
-        public User Create(UserModel korisnik, Infrastructure.Database.AppContext context)
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+        public User Create(UserModel korisnik, AppContext context, string password)
+        {
+
+            return new User()
+            {
+                Id = korisnik.Id,
+                Admin = korisnik.Admin,
+                FirstName = korisnik.FirstName,
+                LastName = korisnik.LastName,
+                Email = korisnik.Email,
+                Password = ComputeSha256Hash(password),
+                Occupation = korisnik.Occupation,
+                DateOfBirth = Convert.ToDateTime(korisnik.DateOfBirth)
+            };
+        }
+
+        public User Create(UserModel korisnik, AppContext context)
         {
             return new User()
             {
@@ -140,6 +174,7 @@ namespace HeuristicAnalysis.API.Controllers
                 Admin = korisnik.Admin,
                 FirstName = korisnik.FirstName,
                 LastName = korisnik.LastName,
+                Email = korisnik.Email,
                 Occupation = korisnik.Occupation,
                 DateOfBirth = Convert.ToDateTime(korisnik.DateOfBirth)
             };
