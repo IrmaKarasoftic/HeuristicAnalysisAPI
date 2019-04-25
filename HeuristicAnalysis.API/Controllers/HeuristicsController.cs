@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Routing;
 using HeuristicAnalysis.API.Models;
 using HeuristicAnalysis.Infrastructure.Database;
 using HeuristicAnalysis.Infrastructure.Database.Entities;
@@ -18,7 +19,22 @@ namespace HeuristicAnalysis.API.Controllers
         {
             try
             {
-                var questions = Repository.Get().ToList().Select(x => Factory.CreateCheckedHeuristicModel(x)).ToList();
+                var questions = Repository.Get().Where(x => x.Id > 10).ToList().Select(x => Factory.CreateCheckedHeuristicModel(x)).ToList();
+                return Ok(questions);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Heuristics/nielsen")]
+        public IHttpActionResult GetNielsen()
+        {
+            try
+            {
+                var questions = Repository.Get().Where(x => x.Id <= 10).ToList().Select(x => Factory.CreateCheckedHeuristicModel(x)).ToList(); ;
                 return Ok(questions);
             }
             catch (Exception ex)

@@ -91,7 +91,7 @@ namespace HeuristicAnalysis.API.Controllers
                 Description = answer.Description,
                 Location = answer.Location,
                 Recommendation = answer.Recommendation,
-                Level = answer.Level,
+                Level = answer.Level.ToString(),
                 Images = answer.Images.Select(Create).ToList(),
             };
         }

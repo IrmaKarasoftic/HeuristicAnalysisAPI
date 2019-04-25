@@ -83,6 +83,8 @@ namespace HeuristicAnalysis.API.Controllers
                     var h = heuristicsRepo.Get(heuristic.Id);
                     version.AnalysisApplicationForm.Heuristics.Add(h);
                 }
+                var nielsen = heuristicsRepo.Get().Where(x => x.Id <= 10).ToList();
+                version.AnalysisApplicationForm.Heuristics = version.AnalysisApplicationForm.Heuristics.Concat(nielsen).ToList();
                 foreach (var group in groups)
                 {
                     var g = groupRepo.Get(group.Id);

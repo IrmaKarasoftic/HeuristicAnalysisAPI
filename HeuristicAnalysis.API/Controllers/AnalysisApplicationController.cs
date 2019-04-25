@@ -78,7 +78,7 @@ namespace HeuristicAnalysis.API.Controllers
                         {
                             dbAnswer.Description = answer.Description;
                             dbAnswer.Location = answer.Location;
-                            dbAnswer.Level = answer.Level;
+                            dbAnswer.Level = (int.Parse(answer.Level));
                             dbAnswer.Recommendation = answer.Recommendation;
                             dbAnswer.Images = answer.Images.Select(Parser.Create).ToList();
                         }
@@ -88,7 +88,7 @@ namespace HeuristicAnalysis.API.Controllers
                             {
                                 Description = answer.Description,
                                 Location = answer.Location,
-                                Level = answer.Level,
+                                Level = (int.Parse(answer.Level)),
                                 Recommendation = answer.Recommendation,
                                 Images = answer.Images.Select(Parser.Create).ToList()
                             };
