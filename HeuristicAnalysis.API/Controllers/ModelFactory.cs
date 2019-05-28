@@ -55,25 +55,42 @@ namespace HeuristicAnalysis.API.Controllers
             };
         }
 
-        internal CompleteAnalysisDetails CreateAnalysisApplicationFormModel(Analysis analysis)
+        internal CompleteAnalysisDetails CreateAnalysisApplicationFormModel(Analysis analysis, List<Answer> answers)
         {
             return new CompleteAnalysisDetails()
             {
                 AnalysisId = analysis.Id,
-                Heuristics = analysis.QuestionsAndAnswers.Select(CreateHeuristicModelWithAnswers).ToList(),
+                Heuristics = analysis.QuestionsAndAnswers.Select(x => CreateHeuristicModelWithAnswers(x, answers)).ToList(),
             };
         }
 
-        private QuestionModel CreateHeuristicModelWithAnswers(AnsweredQuestion qa)
+        private QuestionModel CreateHeuristicModelWithAnswers(AnsweredQuestion qa, List<Answer> answers)
         {
             var hwa = new QuestionModel()
             {
                 Id = qa.Id,
                 HeuristicText = qa.HeuristicText,
                 HeuristicTitle = qa.HeuristicTitle,
-                Answers = qa.Answers.Select(Create).ToList()
+                Answers = answers.Where(x => x.QuestionAnswerId == qa.Id).Select(a => new AnswerModel()
+                {
+                    Id = a.Id,
+                    Description = a.Description,
+                    Level = a.Level,
+                    Images = a.Images.Select(x => CreateImageModel(x)).ToList(),
+                    Location = a.Location,
+                    Recommendation = a.Recommendation
+                }).ToList()
             };
+
             return hwa;
+        }
+
+        private ImageSrc CreateImageModel(HeuristicImage img)
+        {
+            return new ImageSrc()
+            {
+                Src = img.Img
+            };
         }
 
         private static ImageSrc Create(HeuristicImage i)
@@ -91,7 +108,7 @@ namespace HeuristicAnalysis.API.Controllers
                 Description = answer.Description,
                 Location = answer.Location,
                 Recommendation = answer.Recommendation,
-                Level = answer.Level.ToString(),
+                Level = answer.Level,
                 Images = answer.Images.Select(Create).ToList(),
             };
         }

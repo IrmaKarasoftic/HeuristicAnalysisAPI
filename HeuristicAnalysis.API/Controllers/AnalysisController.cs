@@ -34,7 +34,7 @@ namespace HeuristicAnalysis.API.Controllers
             try
             {
                 var context = Repository.HomeContext();
-                var form = Factory.CreateAnalysisApplicationFormModel(new Repository<Analysis>(context).Get(id));
+                var form = Factory.CreateAnalysisApplicationFormModel(new Repository<Analysis>(context).Get(id), new Repository<Answer>(context).Get().ToList());
                 return Ok(form);
             }
             catch (Exception ex)

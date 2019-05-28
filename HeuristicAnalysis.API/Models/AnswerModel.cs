@@ -10,7 +10,7 @@ namespace HeuristicAnalysis.API.Models
         public string Description { get; set; }
         public string Location { get; set; }
         public string Recommendation { get; set; }
-        public string Level { get; set; }
+        public int Level { get; set; }
         public List<ImageSrc> Images { get; set; }
     }
 }

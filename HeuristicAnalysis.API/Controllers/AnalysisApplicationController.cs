@@ -64,6 +64,7 @@ namespace HeuristicAnalysis.API.Controllers
         {
             var context = Repository.HomeContext();
             var heuristicRepo = new Repository<AnsweredQuestion>(context);
+            var answersRepo = new Repository<Answer>(context);
             if (model == null) return BadRequest("Model is null");
             if (id <= 0) return BadRequest("ID not valid");
             try
@@ -78,7 +79,7 @@ namespace HeuristicAnalysis.API.Controllers
                         {
                             dbAnswer.Description = answer.Description;
                             dbAnswer.Location = answer.Location;
-                            dbAnswer.Level = (int.Parse(answer.Level));
+                            dbAnswer.Level = answer.Level;
                             dbAnswer.Recommendation = answer.Recommendation;
                             dbAnswer.Images = answer.Images.Select(Parser.Create).ToList();
                         }
@@ -88,11 +89,12 @@ namespace HeuristicAnalysis.API.Controllers
                             {
                                 Description = answer.Description,
                                 Location = answer.Location,
-                                Level = (int.Parse(answer.Level)),
+                                Level = answer.Level,
                                 Recommendation = answer.Recommendation,
-                                Images = answer.Images.Select(Parser.Create).ToList()
+                                Images = answer.Images.Select(Parser.Create).ToList(),
+                                QuestionAnswerId = heuristic.Id
                             };
-                            dbHeuristics.Answers.Add(a);
+                            answersRepo.Insert(a);
                         }
                     }
                     heuristicRepo.Update(dbHeuristics, dbHeuristics.Id);
@@ -103,13 +105,14 @@ namespace HeuristicAnalysis.API.Controllers
                 var answersFromUi = model.Heuristics.ToList();
                 foreach (var dbAnswer in answersFromDb)
                 {
-                    foreach (var answer in dbAnswer.Answers)
+                    var dbAnswers = answersRepo.Get().Where(x => x.QuestionAnswerId == dbAnswer.Id);
+                    foreach (var answer in dbAnswers)
                     {
                         var dba = Repository.Context.Answers.Find(answer.Id);
                         var existingAnswer = answersFromUi.FirstOrDefault(answerModel => answerModel.Answers.Any(ans => ans.Id == dba.Id));
                         if (dba != null && existingAnswer == null)
                         {
-                            dbAnswer.Answers.Remove(dba);
+                            answersRepo.Delete(dba.Id);
                         }
                     }
                 }

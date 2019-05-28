@@ -64,6 +64,8 @@ namespace HeuristicAnalysis.API.Controllers
 
         public Analysis CreateAnalysis(FillOutAnalysisModel model, AppContext context)
         {
+            var analysisRepo = new Repository<Analysis>(context);
+            var answersRepo = new Repository<Answer>(context);
             var analysis = new Analysis()
             {
                 Reviewer = context.Users.FirstOrDefault(u => u.Id == model.UserId),
@@ -78,18 +80,26 @@ namespace HeuristicAnalysis.API.Controllers
                 Level = 1,
                 Recommendation = ""
             };
+            analysisRepo.Insert(analysis);
+
             foreach (var heuristic in heuristics)
             {
                 var qa = new AnsweredQuestion()
                 {
                     HeuristicText = heuristic.HeuristicText,
                     HeuristicTitle = heuristic.HeuristicTitle,
-                    Answers = new List<Answer>()
                 };
-                qa.Answers.Add(defaultAnswer);
                 analysis.QuestionsAndAnswers.Add(qa);
             }
-            new Repository<Analysis>(context).Insert(analysis);
+
+            analysisRepo.Update(analysis, analysis.Id);
+
+            foreach(var question in analysis.QuestionsAndAnswers)
+            {
+                defaultAnswer.QuestionAnswerId = question.Id;
+                answersRepo.Insert(defaultAnswer);
+            }
+            analysisRepo.Update(analysis, analysis.Id);
             return analysis;
         }
 
@@ -104,21 +114,11 @@ namespace HeuristicAnalysis.API.Controllers
         internal AnsweredQuestion Create(CreateFilledInHeuristicModel heuristic)
         {
 
-            var heuristicImages = new List<HeuristicImage>();
-            foreach (var image in heuristic.Images)
-            {
-                var img = new HeuristicImage
-                {
-                    Img = image.Src
-                };
-                heuristicImages.Add(img);
-            }
             var qa = new AnsweredQuestion
             {
                 Id = heuristic.Id,
                 HeuristicTitle = heuristic.HeuristicTitle,
                 HeuristicText = heuristic.HeuristicText,
-                Images = heuristicImages
             };
             return qa;
         }

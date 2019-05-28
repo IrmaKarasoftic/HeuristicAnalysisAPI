@@ -20,8 +20,6 @@ C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Data
 C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\bin\Debug\EntityFramework.xml
 C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csprojAssemblyReference.cache
-C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.rename.resources
-C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csproj.GenerateResource.cache
 C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csproj.CoreCompileInputs.cache
 C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csproj.CopyComplete
 C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.dll
