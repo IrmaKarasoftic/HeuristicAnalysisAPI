@@ -78,7 +78,8 @@ namespace HeuristicAnalysis.API.Controllers
                     Level = a.Level,
                     Images = a.Images.Select(x => CreateImageModel(x)).ToList(),
                     Location = a.Location,
-                    Recommendation = a.Recommendation
+                    Recommendation = a.Recommendation,
+                    Answered = a.Answered
                 }).ToList()
             };
 
@@ -109,6 +110,7 @@ namespace HeuristicAnalysis.API.Controllers
                 Location = answer.Location,
                 Recommendation = answer.Recommendation,
                 Level = answer.Level,
+                Answered = answer.Answered,
                 Images = answer.Images.Select(Create).ToList(),
             };
         }
@@ -169,15 +171,16 @@ namespace HeuristicAnalysis.API.Controllers
             var vers = context.Versions.SingleOrDefault(v => v.AnalysisApplicationForm.Id == analiza.Id);
             var version = Create(vers);
             var app = Create(context.Applications.SingleOrDefault(a => a.Versions.Select(ver=> ver.Id).Contains(vers.Id)));
-            var created = context.Analyses.Any(a => a.Reviewer.Id == user.Id && a.Version.Id == version.Id);
+            var created = context.Analyses.FirstOrDefault(a => a.Reviewer.Id == user.Id && a.Version.Id == version.Id);
             return new AnalysisModel()
             {
-                Id = analiza.Id,
+                Id = (created != null) ? created.Id : 0,
                 Verzija = version,
                 Aplikacija = app,
-                Created = created,
+                Created = created != null,
                 AnalysisFormId = vers.AnalysisApplicationForm.Id,
-                Korisnik = Create(user)
+                Korisnik = Create(user),
+                Analyzed = (created != null)
             };
         }
 

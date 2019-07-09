@@ -11,6 +11,7 @@ namespace HeuristicAnalysis.API.Models
         public string Location { get; set; }
         public string Recommendation { get; set; }
         public int Level { get; set; }
+        public bool Answered { get; set; }
         public List<ImageSrc> Images { get; set; }
     }
 }

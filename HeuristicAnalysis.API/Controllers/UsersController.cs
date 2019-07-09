@@ -49,7 +49,8 @@ namespace HeuristicAnalysis.API.Controllers
             try
             {
                 if (model == null) return BadRequest("Model is null");
-                var password = System.Web.Security.Membership.GeneratePassword(8, 3);
+                //var password = System.Web.Security.Membership.GeneratePassword(8, 3);
+                var password = "Master123";
                 var entity = Parser.Create(model, Repository.HomeContext(), password);
                 Repository.Insert(entity);
                 var emailModel = new Infrastructure.Services.EmailModel()

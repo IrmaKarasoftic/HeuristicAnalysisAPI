@@ -77,8 +77,9 @@ namespace HeuristicAnalysis.API.Controllers
             {
                 Description = "",
                 Location = "",
-                Level = 1,
-                Recommendation = ""
+                Level = 0,
+                Recommendation = "",
+                Answered = false
             };
             analysisRepo.Insert(analysis);
 

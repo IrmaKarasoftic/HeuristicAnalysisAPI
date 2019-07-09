@@ -241,10 +241,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModelFactory.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\DiagramsController.cs" />
     <Compile Include="Controllers\VersionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReportModel.cs" />
+    <Compile Include="Models\DiagramModel.cs" />
     <Compile Include="Models\FillOutAnalysisModel.cs" />
     <Compile Include="Models\CompleteAnalysisDetails.cs" />
     <Compile Include="Models\CreateAnalysisModel.cs" />

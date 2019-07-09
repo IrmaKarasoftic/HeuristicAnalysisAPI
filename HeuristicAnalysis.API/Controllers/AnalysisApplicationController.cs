@@ -65,6 +65,7 @@ namespace HeuristicAnalysis.API.Controllers
             var context = Repository.HomeContext();
             var heuristicRepo = new Repository<AnsweredQuestion>(context);
             var answersRepo = new Repository<Answer>(context);
+            var analysisRepo = new Repository<Analysis>(context);
             if (model == null) return BadRequest("Model is null");
             if (id <= 0) return BadRequest("ID not valid");
             try
@@ -82,6 +83,7 @@ namespace HeuristicAnalysis.API.Controllers
                             dbAnswer.Level = answer.Level;
                             dbAnswer.Recommendation = answer.Recommendation;
                             dbAnswer.Images = answer.Images.Select(Parser.Create).ToList();
+                            dbAnswer.Answered = true;
                         }
                         else
                         {
@@ -92,6 +94,7 @@ namespace HeuristicAnalysis.API.Controllers
                                 Level = answer.Level,
                                 Recommendation = answer.Recommendation,
                                 Images = answer.Images.Select(Parser.Create).ToList(),
+                                Answered = true,
                                 QuestionAnswerId = heuristic.Id
                             };
                             answersRepo.Insert(a);
@@ -116,6 +119,9 @@ namespace HeuristicAnalysis.API.Controllers
                         }
                     }
                 }
+                var analysis = analysisRepo.Get(model.AnalysisId);
+                analysis.Analyzed = true;
+                analysisRepo.Update(analysis, analysis.Id);
                 return Ok();
             }
             catch (Exception ex)

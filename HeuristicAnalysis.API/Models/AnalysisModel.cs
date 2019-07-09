@@ -12,5 +12,6 @@ namespace HeuristicAnalysis.API.Models
         public UserModel Korisnik { get; set; }
         public QuestionModel Pitanje { get; set; }
         public bool Created { get; set; }
+        public bool Analyzed { get; set; }
     }
 }
