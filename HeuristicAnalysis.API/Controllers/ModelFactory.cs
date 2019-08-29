@@ -51,7 +51,7 @@ namespace HeuristicAnalysis.API.Controllers
             {
                 Id = v.Id,
                 VersionName = v.VersionName,
-                Date = v.Date
+                Date = v.Date,
             };
         }
 
@@ -201,8 +201,9 @@ namespace HeuristicAnalysis.API.Controllers
 
         public AnalysisModel CreateAnalysisModel(Analysis analiza, AppContext context)
         {
-            var version = Create(context.Versions.SingleOrDefault(v => v.AnalysisApplicationForm.Id == analiza.Id));
-            var app = CreateWithoutVersion(context.Applications.SingleOrDefault(a => a.Id == version.Id));
+            var version = Create(context.Versions.SingleOrDefault(v => v.Id == analiza.Version.Id));
+            var appEntity = context.Applications.SingleOrDefault(a => a.Versions.Any(v => v.Id == version.Id));
+            var app = CreateWithoutVersion(appEntity);
             return new AnalysisModel()
             {
                 Id = analiza.Id,

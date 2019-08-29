@@ -95,7 +95,8 @@ namespace HeuristicAnalysis.API.Controllers
                                 Recommendation = answer.Recommendation,
                                 Images = answer.Images.Select(Parser.Create).ToList(),
                                 Answered = true,
-                                QuestionAnswerId = heuristic.Id
+                                QuestionAnswerId = heuristic.Id,
+                                HeuristicId = dbHeuristics.DatabaseHeuristicId
                             };
                             answersRepo.Insert(a);
                         }
@@ -103,25 +104,25 @@ namespace HeuristicAnalysis.API.Controllers
                     heuristicRepo.Update(dbHeuristics, dbHeuristics.Id);
                 }
 
-                var ids = model.Heuristics.Select(x => x.Id).ToList();
-                var answersFromDb = heuristicRepo.Context.AnsweredQuestions.Where(x => ids.Contains(x.Id));
-                var answersFromUi = model.Heuristics.ToList();
-                foreach (var dbAnswer in answersFromDb)
-                {
-                    var dbAnswers = answersRepo.Get().Where(x => x.QuestionAnswerId == dbAnswer.Id);
-                    foreach (var answer in dbAnswers)
-                    {
-                        var dba = Repository.Context.Answers.Find(answer.Id);
-                        var existingAnswer = answersFromUi.FirstOrDefault(answerModel => answerModel.Answers.Any(ans => ans.Id == dba.Id));
-                        if (dba != null && existingAnswer == null)
-                        {
-                            answersRepo.Delete(dba.Id);
-                        }
-                    }
-                }
-                var analysis = analysisRepo.Get(model.AnalysisId);
-                analysis.Analyzed = true;
-                analysisRepo.Update(analysis, analysis.Id);
+                //var ids = model.Heuristics.Select(x => x.Id).ToList();
+                //var answersFromDb = heuristicRepo.Context.AnsweredQuestions.Where(x => ids.Contains(x.Id));
+                //var answersFromUi = model.Heuristics.ToList();
+                //foreach (var dbAnswer in answersFromDb)
+                //{
+                //    var dbAnswers = answersRepo.Get().Where(x => x.QuestionAnswerId == dbAnswer.Id);
+                //    foreach (var answer in dbAnswers)
+                //    {
+                //        var dba = Repository.Context.Answers.Find(answer.Id);
+                //        var existingAnswer = answersFromUi.FirstOrDefault(answerModel => answerModel.Answers.Any(ans => ans.Id == dba.Id));
+                //        if (dba != null && existingAnswer == null)
+                //        {
+                //            answersRepo.Delete(dba.Id);
+                //        }
+                //    }
+                //}
+                //var analysis = analysisRepo.Get(model.AnalysisId);
+                //analysis.Analyzed = true;
+                //analysisRepo.Update(analysis, analysis.Id);
                 return Ok();
             }
             catch (Exception ex)

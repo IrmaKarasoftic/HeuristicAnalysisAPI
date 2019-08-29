@@ -8,6 +8,7 @@ namespace HeuristicAnalysis.Infrastructure.Database.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
+        public string ApplicationType { get; set; }
         public virtual ICollection<Version> Versions { get; set; }
     }
 }

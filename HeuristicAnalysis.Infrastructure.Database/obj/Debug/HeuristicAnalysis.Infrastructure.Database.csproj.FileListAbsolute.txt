@@ -26,3 +26,5 @@ C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Data
 C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.pdb
 C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.addedAnsweredBoolToAnswer.resources
 C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.csproj.GenerateResource.cache
+C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.ChangedDatabase.resources
+C:\Users\irmaka\Repos\HeuristicAnalysisAPI\HeuristicAnalysis.Infrastructure.Database\obj\Debug\HeuristicAnalysis.Infrastructure.Database.AddedAppTypeAndResolvedToAnswer.resources

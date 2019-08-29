@@ -18,7 +18,9 @@ namespace HeuristicAnalysis.API.Controllers
         public IHttpActionResult GetAll()
         {
             try
-            {
+            { 
+
+                var a = Repository.Get().ToList();
                 var questions = Repository.Get().Where(x => x.Id > 10).ToList().Select(x => Factory.CreateCheckedHeuristicModel(x)).ToList();
                 return Ok(questions);
             }

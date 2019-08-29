@@ -246,6 +246,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\TableReportModel.cs" />
+    <Compile Include="Models\TableDiagramItem.cs" />
     <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\DiagramModel.cs" />
     <Compile Include="Models\FillOutAnalysisModel.cs" />

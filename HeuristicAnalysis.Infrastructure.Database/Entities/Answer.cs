@@ -11,7 +11,9 @@ namespace HeuristicAnalysis.Infrastructure.Database.Entities
         public string Recommendation { get; set; }
         public int Level { get; set; }
         public int QuestionAnswerId { get; set; }
+        public int HeuristicId { get; set; }
         public bool Answered { get; set; }
+        public bool Resolved { get; set; }
         public virtual ICollection<HeuristicImage> Images { get; set; }
     }
 }

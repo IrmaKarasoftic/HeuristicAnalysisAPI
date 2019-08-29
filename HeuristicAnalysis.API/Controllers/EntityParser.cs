@@ -89,6 +89,7 @@ namespace HeuristicAnalysis.API.Controllers
                 {
                     HeuristicText = heuristic.HeuristicText,
                     HeuristicTitle = heuristic.HeuristicTitle,
+                    DatabaseHeuristicId = heuristic.Id
                 };
                 analysis.QuestionsAndAnswers.Add(qa);
             }
@@ -98,6 +99,7 @@ namespace HeuristicAnalysis.API.Controllers
             foreach(var question in analysis.QuestionsAndAnswers)
             {
                 defaultAnswer.QuestionAnswerId = question.Id;
+                defaultAnswer.HeuristicId = question.DatabaseHeuristicId;
                 answersRepo.Insert(defaultAnswer);
             }
             analysisRepo.Update(analysis, analysis.Id);

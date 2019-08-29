@@ -4,11 +4,9 @@ using HeuristicAnalysis.Infrastructure.Database.Entities;
 
 namespace HeuristicAnalysis.API.Models
 {
-    public class ReportModel
+    public class TableReportModel
     {
-        public List<Answer> Answers { get; set; }
+        public List<TableDiagramItem> TableItems { get; set; }
         public DiagramModel DiagramModel { get; set; }
-        public string AppName { get; set; }
-        public string VersionName { get; set; }
     }
 }
