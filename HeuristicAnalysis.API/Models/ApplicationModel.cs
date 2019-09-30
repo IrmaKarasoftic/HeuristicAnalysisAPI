@@ -11,6 +11,7 @@ namespace HeuristicAnalysis.API.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
+        public string ApplicationType { get; set; }
         public List<VersionModel> Versions { get; set; }
     }
 }

@@ -27,7 +27,8 @@ namespace HeuristicAnalysis.API.Controllers
             {
                 Id = model.Id,
                 Name = model.Name,
-                Url = model.Url
+                Url = model.Url,
+                ApplicationType = model.ApplicationType.ToString()
             };
         }
 

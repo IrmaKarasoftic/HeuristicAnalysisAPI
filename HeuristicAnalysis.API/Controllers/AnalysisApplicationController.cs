@@ -120,9 +120,9 @@ namespace HeuristicAnalysis.API.Controllers
                 //        }
                 //    }
                 //}
-                //var analysis = analysisRepo.Get(model.AnalysisId);
-                //analysis.Analyzed = true;
-                //analysisRepo.Update(analysis, analysis.Id);
+                var analysis = analysisRepo.Get(model.AnalysisId);
+                analysis.Analyzed = true;
+                analysisRepo.Update(analysis, analysis.Id);
                 return Ok();
             }
             catch (Exception ex)

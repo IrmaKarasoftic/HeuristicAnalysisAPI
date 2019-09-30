@@ -53,13 +53,13 @@ namespace HeuristicAnalysis.API.Controllers
                 var password = "Master123";
                 var entity = Parser.Create(model, Repository.HomeContext(), password);
                 Repository.Insert(entity);
-                var emailModel = new Infrastructure.Services.EmailModel()
-                {
-                    Username = model.FirstName + " " + model.LastName,
-                    Password = password,
-                    MailTo = model.Email
-                };
-                EmailService.SendEmail(emailModel);
+                //var emailModel = new Infrastructure.Services.EmailModel()
+                //{
+                //    Username = model.FirstName + " " + model.LastName,
+                //    Password = password,
+                //    MailTo = model.Email
+                //};
+                //EmailService.SendEmail(emailModel);
                 return Ok();
             }
             catch (Exception ex)
